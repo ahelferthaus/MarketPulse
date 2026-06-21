@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data files (generated, not source)
+data/*.duckdb
+data/*.duckdb.wal
+data/*.sqlite
+data/*.sqlite3
+data/cache/
+data/exports/
+data/static_site_payloads/*.json
+!data/mock/
+!data/sample_sources/
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Node.js / Frontend
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Docker
+*.pid
+
+# Misc
+*.bak
+*.tmp

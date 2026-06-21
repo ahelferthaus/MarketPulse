@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MARKETPULSE_MODE=public
+      - DAILY_UPDATE_TIME=16:30
+      - INTRADAY_REFRESH_MINUTES=15
+      - CACHE_TTL_MINUTES=5
+      - LOG_LEVEL=INFO
+    volumes:
+      - marketpulse-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  marketpulse-data:

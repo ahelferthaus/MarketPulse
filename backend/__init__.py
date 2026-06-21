@@ -1,0 +1,1 @@
+"""Westwood MarketPulse backend package."""
