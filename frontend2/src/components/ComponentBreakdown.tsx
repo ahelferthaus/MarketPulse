@@ -19,13 +19,19 @@ const directionColor: Record<string, string> = {
   neutral: "#6B7280",
 };
 
-export default function ComponentBreakdown() {
+interface ComponentBreakdownProps {
+  components?: ComponentData[];
+}
+
+export default function ComponentBreakdown({
+  components = MOCK_COMPONENTS,
+}: ComponentBreakdownProps) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir }>({
     key: "contribution",
     dir: "desc",
   });
 
-  const sorted = [...MOCK_COMPONENTS].sort((a, b) => {
+  const sorted = [...components].sort((a, b) => {
     const va = a[sort.key];
     const vb = b[sort.key];
     if (typeof va === "string" && typeof vb === "string") {

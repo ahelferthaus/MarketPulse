@@ -20,38 +20,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import RegimeBadge from "../components/RegimeBadge";
+import { MARKET_CONFIGS } from "../lib/mockData";
 import {
-  MARKET_CONFIGS,
-  MOCK_SUB_INDICES,
-  MOCK_HISTORY,
-  MOCK_COMPONENTS,
-} from "../lib/mockData";
-
-const marketScores: Record<string, { composite: number; regime: string; label: string }> = {
-  sp500: { composite: 67, regime: "mp4", label: "Risk-On" },
-  nasdaq100: { composite: 72, regime: "mp4", label: "Risk-On" },
-  russell2000: { composite: 54, regime: "mp3", label: "Neutral" },
-  dow: { composite: 61, regime: "mp4", label: "Risk-On" },
-};
-
-const marketSubIndices: Record<string, typeof MOCK_SUB_INDICES> = {
-  sp500: MOCK_SUB_INDICES,
-  nasdaq100: {
-    classic: { score: 76, change1d: 2, change1w: -3, regime: "mp4_risk_on", label: "Risk-On", confidence: 90 },
-    narrative: { score: 68, change1d: 3, change1w: 5, regime: "mp4_risk_on", label: "Risk-On", confidence: 82 },
-    positioning: { score: 72, change1d: 1, change1w: -1, regime: "mp4_risk_on", label: "Risk-On", confidence: 88 },
-  },
-  russell2000: {
-    classic: { score: 58, change1d: -1, change1w: -8, regime: "mp3_neutral", label: "Neutral", confidence: 80 },
-    narrative: { score: 48, change1d: -3, change1w: 4, regime: "mp3_neutral", label: "Neutral", confidence: 72 },
-    positioning: { score: 56, change1d: 0, change1w: -5, regime: "mp3_neutral", label: "Neutral", confidence: 78 },
-  },
-  dow: {
-    classic: { score: 64, change1d: 1, change1w: -4, regime: "mp4_risk_on", label: "Risk-On", confidence: 88 },
-    narrative: { score: 55, change1d: -1, change1w: 6, regime: "mp3_neutral", label: "Neutral", confidence: 76 },
-    positioning: { score: 64, change1d: 2, change1w: -2, regime: "mp4_risk_on", label: "Risk-On", confidence: 82 },
-  },
-};
+  getDashboard,
+  getComponents,
+  getMarketComparison,
+  mockDashboard,
+} from "../lib/api";
+import { useAsync } from "../lib/useApi";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -78,17 +54,20 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
 export default function Markets() {
   const [activeMarket, setActiveMarket] = useState("sp500");
   const config = MARKET_CONFIGS.find((m) => m.id === activeMarket)!;
-  const score = marketScores[activeMarket];
-  const subs = marketSubIndices[activeMarket];
 
-  // Multi-market comparison data
-  const comparisonData = MOCK_HISTORY.slice(-30).map((h) => ({
-    date: h.date,
-    "S&P 500": h.composite,
-    "Nasdaq 100": Math.min(100, h.composite + 5 + Math.random() * 4),
-    "Russell 2000": Math.max(0, h.composite - 10 + Math.random() * 6),
-    "Dow": Math.min(100, h.composite + 1 + Math.random() * 3),
-  }));
+  const dash = useAsync(
+    () => getDashboard(activeMarket),
+    mockDashboard(),
+    [activeMarket],
+  );
+  const components = useAsync(
+    () => getComponents(activeMarket),
+    [],
+    [activeMarket],
+  );
+  const comparisonData = useAsync(() => getMarketComparison(), [], []);
+
+  const subs = dash.subIndices;
 
   const subColors: Record<string, string> = {
     classic: "#3B82F6",
@@ -133,8 +112,8 @@ export default function Markets() {
             </div>
             <div className="flex items-center gap-4">
               <div className="text-center">
-                <div className="text-4xl font-extrabold text-slate-800">{score.composite}</div>
-                <RegimeBadge regime={score.regime} label={score.label} />
+                <div className="text-4xl font-extrabold text-slate-800">{dash.composite}</div>
+                <RegimeBadge regime={dash.regime} label={dash.regimeLabel} />
               </div>
             </div>
           </div>
@@ -220,7 +199,7 @@ export default function Markets() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {MOCK_COMPONENTS.map((c) => (
+              {components.map((c) => (
                 <TableRow key={c.name}>
                   <TableCell className="font-medium text-sm">{c.name}</TableCell>
                   <TableCell className="text-sm font-semibold">{c.score}</TableCell>

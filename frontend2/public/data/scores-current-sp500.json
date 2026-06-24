@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-06-24T17:01:34.476508+00:00",
+  "market_id": "sp500",
+  "classic_score": 62.0,
+  "narrative_score": 55.0,
+  "positioning_score": 58.0,
+  "composite_score": 58.5,
+  "regime": "mp4_risk_on",
+  "regime_label": "Risk-On",
+  "direction": "stable",
+  "confidence": 82.0,
+  "explanation": "Markets are in a risk-on posture with composite score of 58.5. Classic indicators show moderate bullishness while narrative sentiment remains balanced. Overall confidence is good at 82%.",
+  "what_changed": null,
+  "drivers": [
+    {
+      "component": "momentum",
+      "contribution": 8.5,
+      "direction": "bullish",
+      "description": "Strong momentum above 125-day moving average"
+    },
+    {
+      "component": "credit_spreads",
+      "contribution": -3.2,
+      "direction": "bearish",
+      "description": "Credit spreads slightly wider than average"
+    }
+  ],
+  "data_quality": {
+    "overall_confidence": 82.0,
+    "sources_used": 5,
+    "sources_available": 7,
+    "missing_components": [
+      "etf_flows",
+      "futures_positioning"
+    ],
+    "substituted_components": [],
+    "stale_data_warnings": [],
+    "data_freshness_minutes": 12
+  }
+}

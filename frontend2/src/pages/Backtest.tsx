@@ -22,10 +22,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  FORWARD_RETURNS,
-  REGIME_TRANSITIONS,
-} from "../lib/mockData";
+import { FORWARD_RETURNS, REGIME_TRANSITIONS } from "../lib/mockData";
+import { getForwardReturns } from "../lib/api";
+import { useAsync } from "../lib/useApi";
 
 interface TooltipPayloadItem {
   value: number;
@@ -59,8 +58,14 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
 }
 
 export default function Backtest() {
+  const forwardReturns = useAsync(
+    () => getForwardReturns("sp500"),
+    FORWARD_RETURNS,
+    [],
+  );
+
   // Regime distribution data
-  const regimeDist = FORWARD_RETURNS.map((r) => ({
+  const regimeDist = forwardReturns.map((r) => ({
     name: r.regime.split(" ")[0],
     label: r.regime,
     occurrences: r.occurrences,
@@ -143,7 +148,7 @@ export default function Backtest() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {FORWARD_RETURNS.map((r) => (
+              {forwardReturns.map((r) => (
                 <TableRow key={r.regime}>
                   <TableCell>
                     <div className="flex items-center gap-2">

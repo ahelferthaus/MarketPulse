@@ -1,0 +1,818 @@
+{
+  "market_id": "nasdaq100",
+  "days": 90,
+  "series": [
+    {
+      "timestamp": "2026-06-24T17:01:34.478049+00:00",
+      "classic_score": 54.57,
+      "narrative_score": 51.57,
+      "positioning_score": 57.78,
+      "composite_score": 54.63,
+      "regime": "mp3_neutral",
+      "confidence": 77.02
+    },
+    {
+      "timestamp": "2026-06-23T17:01:34.478049+00:00",
+      "classic_score": 54.18,
+      "narrative_score": 47.82,
+      "positioning_score": 58.44,
+      "composite_score": 53.55,
+      "regime": "mp3_neutral",
+      "confidence": 67.33
+    },
+    {
+      "timestamp": "2026-06-22T17:01:34.478049+00:00",
+      "classic_score": 53.53,
+      "narrative_score": 48.11,
+      "positioning_score": 58.91,
+      "composite_score": 53.52,
+      "regime": "mp3_neutral",
+      "confidence": 81.64
+    },
+    {
+      "timestamp": "2026-06-21T17:01:34.478049+00:00",
+      "classic_score": 55.5,
+      "narrative_score": 48.39,
+      "positioning_score": 57.43,
+      "composite_score": 53.95,
+      "regime": "mp3_neutral",
+      "confidence": 59.85
+    },
+    {
+      "timestamp": "2026-06-20T17:01:34.478049+00:00",
+      "classic_score": 56.24,
+      "narrative_score": 51.67,
+      "positioning_score": 57.51,
+      "composite_score": 55.25,
+      "regime": "mp3_neutral",
+      "confidence": 68.94
+    },
+    {
+      "timestamp": "2026-06-19T17:01:34.478049+00:00",
+      "classic_score": 57.84,
+      "narrative_score": 48.03,
+      "positioning_score": 56.89,
+      "composite_score": 54.61,
+      "regime": "mp3_neutral",
+      "confidence": 74.9
+    },
+    {
+      "timestamp": "2026-06-18T17:01:34.478049+00:00",
+      "classic_score": 60.46,
+      "narrative_score": 47.43,
+      "positioning_score": 57.64,
+      "composite_score": 55.71,
+      "regime": "mp3_neutral",
+      "confidence": 72.48
+    },
+    {
+      "timestamp": "2026-06-17T17:01:34.478049+00:00",
+      "classic_score": 62.81,
+      "narrative_score": 44.65,
+      "positioning_score": 58.78,
+      "composite_score": 56.15,
+      "regime": "mp3_neutral",
+      "confidence": 54.85
+    },
+    {
+      "timestamp": "2026-06-16T17:01:34.478049+00:00",
+      "classic_score": 54.95,
+      "narrative_score": 43.13,
+      "positioning_score": 56.95,
+      "composite_score": 52.0,
+      "regime": "mp3_neutral",
+      "confidence": 78.76
+    },
+    {
+      "timestamp": "2026-06-15T17:01:34.478049+00:00",
+      "classic_score": 56.94,
+      "narrative_score": 40.08,
+      "positioning_score": 58.64,
+      "composite_score": 52.39,
+      "regime": "mp3_neutral",
+      "confidence": 59.98
+    },
+    {
+      "timestamp": "2026-06-14T17:01:34.478049+00:00",
+      "classic_score": 56.68,
+      "narrative_score": 39.35,
+      "positioning_score": 58.87,
+      "composite_score": 52.14,
+      "regime": "mp3_neutral",
+      "confidence": 78.19
+    },
+    {
+      "timestamp": "2026-06-13T17:01:34.478049+00:00",
+      "classic_score": 58.6,
+      "narrative_score": 40.22,
+      "positioning_score": 60.17,
+      "composite_score": 53.56,
+      "regime": "mp3_neutral",
+      "confidence": 74.78
+    },
+    {
+      "timestamp": "2026-06-12T17:01:34.478049+00:00",
+      "classic_score": 56.71,
+      "narrative_score": 38.43,
+      "positioning_score": 59.23,
+      "composite_score": 51.98,
+      "regime": "mp3_neutral",
+      "confidence": 74.99
+    },
+    {
+      "timestamp": "2026-06-11T17:01:34.478049+00:00",
+      "classic_score": 55.96,
+      "narrative_score": 44.27,
+      "positioning_score": 57.59,
+      "composite_score": 52.94,
+      "regime": "mp3_neutral",
+      "confidence": 59.01
+    },
+    {
+      "timestamp": "2026-06-10T17:01:34.478049+00:00",
+      "classic_score": 58.27,
+      "narrative_score": 47.83,
+      "positioning_score": 58.6,
+      "composite_score": 55.24,
+      "regime": "mp3_neutral",
+      "confidence": 78.36
+    },
+    {
+      "timestamp": "2026-06-09T17:01:34.478049+00:00",
+      "classic_score": 62.55,
+      "narrative_score": 47.59,
+      "positioning_score": 55.76,
+      "composite_score": 56.02,
+      "regime": "mp3_neutral",
+      "confidence": 64.68
+    },
+    {
+      "timestamp": "2026-06-08T17:01:34.478049+00:00",
+      "classic_score": 65.41,
+      "narrative_score": 43.98,
+      "positioning_score": 55.82,
+      "composite_score": 56.1,
+      "regime": "mp3_neutral",
+      "confidence": 72.53
+    },
+    {
+      "timestamp": "2026-06-07T17:01:34.478049+00:00",
+      "classic_score": 64.46,
+      "narrative_score": 45.79,
+      "positioning_score": 56.99,
+      "composite_score": 56.62,
+      "regime": "mp3_neutral",
+      "confidence": 93.21
+    },
+    {
+      "timestamp": "2026-06-06T17:01:34.478049+00:00",
+      "classic_score": 66.32,
+      "narrative_score": 44.27,
+      "positioning_score": 55.86,
+      "composite_score": 56.57,
+      "regime": "mp3_neutral",
+      "confidence": 61.68
+    },
+    {
+      "timestamp": "2026-06-05T17:01:34.478049+00:00",
+      "classic_score": 69.18,
+      "narrative_score": 42.85,
+      "positioning_score": 55.72,
+      "composite_score": 57.24,
+      "regime": "mp3_neutral",
+      "confidence": 77.49
+    },
+    {
+      "timestamp": "2026-06-04T17:01:34.478049+00:00",
+      "classic_score": 67.01,
+      "narrative_score": 42.12,
+      "positioning_score": 52.04,
+      "composite_score": 55.05,
+      "regime": "mp3_neutral",
+      "confidence": 59.18
+    },
+    {
+      "timestamp": "2026-06-03T17:01:34.478049+00:00",
+      "classic_score": 65.3,
+      "narrative_score": 43.15,
+      "positioning_score": 54.43,
+      "composite_score": 55.4,
+      "regime": "mp3_neutral",
+      "confidence": 69.82
+    },
+    {
+      "timestamp": "2026-06-02T17:01:34.478049+00:00",
+      "classic_score": 66.09,
+      "narrative_score": 43.57,
+      "positioning_score": 56.6,
+      "composite_score": 56.49,
+      "regime": "mp3_neutral",
+      "confidence": 78.93
+    },
+    {
+      "timestamp": "2026-06-01T17:01:34.478049+00:00",
+      "classic_score": 66.91,
+      "narrative_score": 41.05,
+      "positioning_score": 58.4,
+      "composite_score": 56.6,
+      "regime": "mp3_neutral",
+      "confidence": 73.81
+    },
+    {
+      "timestamp": "2026-05-31T17:01:34.478049+00:00",
+      "classic_score": 70.59,
+      "narrative_score": 40.97,
+      "positioning_score": 62.31,
+      "composite_score": 59.22,
+      "regime": "mp3_neutral",
+      "confidence": 66.41
+    },
+    {
+      "timestamp": "2026-05-30T17:01:34.478049+00:00",
+      "classic_score": 75.37,
+      "narrative_score": 41.26,
+      "positioning_score": 61.28,
+      "composite_score": 60.91,
+      "regime": "mp4_risk_on",
+      "confidence": 58.72
+    },
+    {
+      "timestamp": "2026-05-29T17:01:34.478049+00:00",
+      "classic_score": 74.92,
+      "narrative_score": 44.82,
+      "positioning_score": 62.91,
+      "composite_score": 62.28,
+      "regime": "mp4_risk_on",
+      "confidence": 76.89
+    },
+    {
+      "timestamp": "2026-05-28T17:01:34.478049+00:00",
+      "classic_score": 67.79,
+      "narrative_score": 46.6,
+      "positioning_score": 64.02,
+      "composite_score": 60.3,
+      "regime": "mp4_risk_on",
+      "confidence": 64.5
+    },
+    {
+      "timestamp": "2026-05-27T17:01:34.478049+00:00",
+      "classic_score": 65.91,
+      "narrative_score": 46.59,
+      "positioning_score": 67.47,
+      "composite_score": 60.58,
+      "regime": "mp4_risk_on",
+      "confidence": 59.45
+    },
+    {
+      "timestamp": "2026-05-26T17:01:34.478049+00:00",
+      "classic_score": 64.62,
+      "narrative_score": 49.99,
+      "positioning_score": 66.58,
+      "composite_score": 60.82,
+      "regime": "mp4_risk_on",
+      "confidence": 66.36
+    },
+    {
+      "timestamp": "2026-05-25T17:01:34.478049+00:00",
+      "classic_score": 64.92,
+      "narrative_score": 46.89,
+      "positioning_score": 67.02,
+      "composite_score": 60.14,
+      "regime": "mp4_risk_on",
+      "confidence": 57.9
+    },
+    {
+      "timestamp": "2026-05-24T17:01:34.478049+00:00",
+      "classic_score": 67.57,
+      "narrative_score": 46.9,
+      "positioning_score": 71.58,
+      "composite_score": 62.57,
+      "regime": "mp4_risk_on",
+      "confidence": 72.81
+    },
+    {
+      "timestamp": "2026-05-23T17:01:34.478049+00:00",
+      "classic_score": 71.67,
+      "narrative_score": 43.64,
+      "positioning_score": 71.34,
+      "composite_score": 63.16,
+      "regime": "mp4_risk_on",
+      "confidence": 73.23
+    },
+    {
+      "timestamp": "2026-05-22T17:01:34.478049+00:00",
+      "classic_score": 76.91,
+      "narrative_score": 39.44,
+      "positioning_score": 73.32,
+      "composite_score": 64.59,
+      "regime": "mp4_risk_on",
+      "confidence": 75.91
+    },
+    {
+      "timestamp": "2026-05-21T17:01:34.478049+00:00",
+      "classic_score": 81.51,
+      "narrative_score": 41.22,
+      "positioning_score": 73.43,
+      "composite_score": 67.0,
+      "regime": "mp4_risk_on",
+      "confidence": 64.78
+    },
+    {
+      "timestamp": "2026-05-20T17:01:34.478049+00:00",
+      "classic_score": 77.76,
+      "narrative_score": 41.71,
+      "positioning_score": 73.04,
+      "composite_score": 65.53,
+      "regime": "mp4_risk_on",
+      "confidence": 90.2
+    },
+    {
+      "timestamp": "2026-05-19T17:01:34.478049+00:00",
+      "classic_score": 75.93,
+      "narrative_score": 42.51,
+      "positioning_score": 69.9,
+      "composite_score": 64.1,
+      "regime": "mp4_risk_on",
+      "confidence": 66.05
+    },
+    {
+      "timestamp": "2026-05-18T17:01:34.478049+00:00",
+      "classic_score": 76.71,
+      "narrative_score": 44.57,
+      "positioning_score": 72.8,
+      "composite_score": 65.9,
+      "regime": "mp4_risk_on",
+      "confidence": 69.56
+    },
+    {
+      "timestamp": "2026-05-17T17:01:34.478049+00:00",
+      "classic_score": 73.36,
+      "narrative_score": 45.71,
+      "positioning_score": 73.83,
+      "composite_score": 65.21,
+      "regime": "mp4_risk_on",
+      "confidence": 74.92
+    },
+    {
+      "timestamp": "2026-05-16T17:01:34.478049+00:00",
+      "classic_score": 71.26,
+      "narrative_score": 48.55,
+      "positioning_score": 74.01,
+      "composite_score": 65.27,
+      "regime": "mp4_risk_on",
+      "confidence": 77.0
+    },
+    {
+      "timestamp": "2026-05-15T17:01:34.478049+00:00",
+      "classic_score": 75.08,
+      "narrative_score": 50.07,
+      "positioning_score": 74.58,
+      "composite_score": 67.43,
+      "regime": "mp4_risk_on",
+      "confidence": 91.53
+    },
+    {
+      "timestamp": "2026-05-14T17:01:34.478049+00:00",
+      "classic_score": 75.81,
+      "narrative_score": 49.33,
+      "positioning_score": 74.81,
+      "composite_score": 67.57,
+      "regime": "mp4_risk_on",
+      "confidence": 84.83
+    },
+    {
+      "timestamp": "2026-05-13T17:01:34.478049+00:00",
+      "classic_score": 76.17,
+      "narrative_score": 50.63,
+      "positioning_score": 77.2,
+      "composite_score": 68.82,
+      "regime": "mp4_risk_on",
+      "confidence": 64.87
+    },
+    {
+      "timestamp": "2026-05-12T17:01:34.478049+00:00",
+      "classic_score": 70.99,
+      "narrative_score": 51.38,
+      "positioning_score": 77.66,
+      "composite_score": 67.11,
+      "regime": "mp4_risk_on",
+      "confidence": 63.92
+    },
+    {
+      "timestamp": "2026-05-11T17:01:34.478049+00:00",
+      "classic_score": 73.6,
+      "narrative_score": 52.9,
+      "positioning_score": 75.67,
+      "composite_score": 68.01,
+      "regime": "mp4_risk_on",
+      "confidence": 75.18
+    },
+    {
+      "timestamp": "2026-05-10T17:01:34.478049+00:00",
+      "classic_score": 73.01,
+      "narrative_score": 49.19,
+      "positioning_score": 76.57,
+      "composite_score": 66.93,
+      "regime": "mp4_risk_on",
+      "confidence": 69.55
+    },
+    {
+      "timestamp": "2026-05-09T17:01:34.478049+00:00",
+      "classic_score": 70.78,
+      "narrative_score": 50.5,
+      "positioning_score": 77.55,
+      "composite_score": 66.73,
+      "regime": "mp4_risk_on",
+      "confidence": 64.22
+    },
+    {
+      "timestamp": "2026-05-08T17:01:34.478049+00:00",
+      "classic_score": 71.98,
+      "narrative_score": 53.03,
+      "positioning_score": 76.13,
+      "composite_score": 67.54,
+      "regime": "mp4_risk_on",
+      "confidence": 73.81
+    },
+    {
+      "timestamp": "2026-05-07T17:01:34.478049+00:00",
+      "classic_score": 71.99,
+      "narrative_score": 58.7,
+      "positioning_score": 72.4,
+      "composite_score": 68.12,
+      "regime": "mp4_risk_on",
+      "confidence": 76.95
+    },
+    {
+      "timestamp": "2026-05-06T17:01:34.478049+00:00",
+      "classic_score": 71.07,
+      "narrative_score": 58.45,
+      "positioning_score": 76.2,
+      "composite_score": 68.82,
+      "regime": "mp4_risk_on",
+      "confidence": 69.91
+    },
+    {
+      "timestamp": "2026-05-05T17:01:34.478049+00:00",
+      "classic_score": 77.79,
+      "narrative_score": 57.34,
+      "positioning_score": 76.9,
+      "composite_score": 71.39,
+      "regime": "mp4_risk_on",
+      "confidence": 65.09
+    },
+    {
+      "timestamp": "2026-05-04T17:01:34.478049+00:00",
+      "classic_score": 75.72,
+      "narrative_score": 57.5,
+      "positioning_score": 76.34,
+      "composite_score": 70.44,
+      "regime": "mp4_risk_on",
+      "confidence": 72.02
+    },
+    {
+      "timestamp": "2026-05-03T17:01:34.478049+00:00",
+      "classic_score": 69.4,
+      "narrative_score": 62.51,
+      "positioning_score": 76.01,
+      "composite_score": 69.32,
+      "regime": "mp4_risk_on",
+      "confidence": 87.43
+    },
+    {
+      "timestamp": "2026-05-02T17:01:34.478049+00:00",
+      "classic_score": 66.38,
+      "narrative_score": 63.24,
+      "positioning_score": 82.34,
+      "composite_score": 70.22,
+      "regime": "mp4_risk_on",
+      "confidence": 61.3
+    },
+    {
+      "timestamp": "2026-05-01T17:01:34.478049+00:00",
+      "classic_score": 61.9,
+      "narrative_score": 61.87,
+      "positioning_score": 83.28,
+      "composite_score": 68.3,
+      "regime": "mp4_risk_on",
+      "confidence": 76.93
+    },
+    {
+      "timestamp": "2026-04-30T17:01:34.478049+00:00",
+      "classic_score": 65.77,
+      "narrative_score": 61.23,
+      "positioning_score": 80.08,
+      "composite_score": 68.7,
+      "regime": "mp4_risk_on",
+      "confidence": 65.65
+    },
+    {
+      "timestamp": "2026-04-29T17:01:34.478049+00:00",
+      "classic_score": 69.49,
+      "narrative_score": 62.39,
+      "positioning_score": 76.16,
+      "composite_score": 69.36,
+      "regime": "mp4_risk_on",
+      "confidence": 69.65
+    },
+    {
+      "timestamp": "2026-04-28T17:01:34.478049+00:00",
+      "classic_score": 73.68,
+      "narrative_score": 67.71,
+      "positioning_score": 77.29,
+      "composite_score": 72.97,
+      "regime": "mp4_risk_on",
+      "confidence": 73.09
+    },
+    {
+      "timestamp": "2026-04-27T17:01:34.478049+00:00",
+      "classic_score": 69.96,
+      "narrative_score": 65.6,
+      "positioning_score": 77.38,
+      "composite_score": 70.88,
+      "regime": "mp4_risk_on",
+      "confidence": 75.03
+    },
+    {
+      "timestamp": "2026-04-26T17:01:34.478049+00:00",
+      "classic_score": 71.7,
+      "narrative_score": 64.41,
+      "positioning_score": 75.08,
+      "composite_score": 70.53,
+      "regime": "mp4_risk_on",
+      "confidence": 62.22
+    },
+    {
+      "timestamp": "2026-04-25T17:01:34.478049+00:00",
+      "classic_score": 68.23,
+      "narrative_score": 66.01,
+      "positioning_score": 70.45,
+      "composite_score": 68.23,
+      "regime": "mp4_risk_on",
+      "confidence": 66.67
+    },
+    {
+      "timestamp": "2026-04-24T17:01:34.478049+00:00",
+      "classic_score": 69.58,
+      "narrative_score": 69.82,
+      "positioning_score": 70.59,
+      "composite_score": 69.96,
+      "regime": "mp4_risk_on",
+      "confidence": 80.01
+    },
+    {
+      "timestamp": "2026-04-23T17:01:34.478049+00:00",
+      "classic_score": 68.38,
+      "narrative_score": 67.96,
+      "positioning_score": 69.24,
+      "composite_score": 68.51,
+      "regime": "mp4_risk_on",
+      "confidence": 85.27
+    },
+    {
+      "timestamp": "2026-04-22T17:01:34.478049+00:00",
+      "classic_score": 71.37,
+      "narrative_score": 69.18,
+      "positioning_score": 75.91,
+      "composite_score": 72.07,
+      "regime": "mp4_risk_on",
+      "confidence": 69.68
+    },
+    {
+      "timestamp": "2026-04-21T17:01:34.478049+00:00",
+      "classic_score": 73.23,
+      "narrative_score": 69.95,
+      "positioning_score": 75.46,
+      "composite_score": 72.91,
+      "regime": "mp4_risk_on",
+      "confidence": 93.16
+    },
+    {
+      "timestamp": "2026-04-20T17:01:34.478049+00:00",
+      "classic_score": 77.75,
+      "narrative_score": 66.45,
+      "positioning_score": 74.66,
+      "composite_score": 73.43,
+      "regime": "mp4_risk_on",
+      "confidence": 74.28
+    },
+    {
+      "timestamp": "2026-04-19T17:01:34.478049+00:00",
+      "classic_score": 80.1,
+      "narrative_score": 63.08,
+      "positioning_score": 70.15,
+      "composite_score": 72.01,
+      "regime": "mp4_risk_on",
+      "confidence": 50.94
+    },
+    {
+      "timestamp": "2026-04-18T17:01:34.478049+00:00",
+      "classic_score": 79.88,
+      "narrative_score": 62.82,
+      "positioning_score": 70.84,
+      "composite_score": 72.05,
+      "regime": "mp4_risk_on",
+      "confidence": 62.3
+    },
+    {
+      "timestamp": "2026-04-17T17:01:34.478049+00:00",
+      "classic_score": 76.21,
+      "narrative_score": 57.76,
+      "positioning_score": 71.5,
+      "composite_score": 69.26,
+      "regime": "mp4_risk_on",
+      "confidence": 73.7
+    },
+    {
+      "timestamp": "2026-04-16T17:01:34.478049+00:00",
+      "classic_score": 79.19,
+      "narrative_score": 59.74,
+      "positioning_score": 71.12,
+      "composite_score": 70.93,
+      "regime": "mp4_risk_on",
+      "confidence": 83.49
+    },
+    {
+      "timestamp": "2026-04-15T17:01:34.478049+00:00",
+      "classic_score": 78.78,
+      "narrative_score": 58.08,
+      "positioning_score": 70.08,
+      "composite_score": 69.96,
+      "regime": "mp4_risk_on",
+      "confidence": 64.15
+    },
+    {
+      "timestamp": "2026-04-14T17:01:34.478049+00:00",
+      "classic_score": 72.28,
+      "narrative_score": 58.48,
+      "positioning_score": 70.58,
+      "composite_score": 67.63,
+      "regime": "mp4_risk_on",
+      "confidence": 66.38
+    },
+    {
+      "timestamp": "2026-04-13T17:01:34.478049+00:00",
+      "classic_score": 70.14,
+      "narrative_score": 59.4,
+      "positioning_score": 74.01,
+      "composite_score": 68.08,
+      "regime": "mp4_risk_on",
+      "confidence": 70.38
+    },
+    {
+      "timestamp": "2026-04-12T17:01:34.478049+00:00",
+      "classic_score": 68.62,
+      "narrative_score": 57.93,
+      "positioning_score": 73.87,
+      "composite_score": 66.99,
+      "regime": "mp4_risk_on",
+      "confidence": 57.35
+    },
+    {
+      "timestamp": "2026-04-11T17:01:34.478049+00:00",
+      "classic_score": 68.24,
+      "narrative_score": 58.08,
+      "positioning_score": 77.56,
+      "composite_score": 67.99,
+      "regime": "mp4_risk_on",
+      "confidence": 79.43
+    },
+    {
+      "timestamp": "2026-04-10T17:01:34.478049+00:00",
+      "classic_score": 71.35,
+      "narrative_score": 56.3,
+      "positioning_score": 78.9,
+      "composite_score": 69.1,
+      "regime": "mp4_risk_on",
+      "confidence": 58.61
+    },
+    {
+      "timestamp": "2026-04-09T17:01:34.478049+00:00",
+      "classic_score": 72.28,
+      "narrative_score": 57.34,
+      "positioning_score": 77.37,
+      "composite_score": 69.33,
+      "regime": "mp4_risk_on",
+      "confidence": 89.99
+    },
+    {
+      "timestamp": "2026-04-08T17:01:34.478049+00:00",
+      "classic_score": 73.98,
+      "narrative_score": 52.59,
+      "positioning_score": 78.47,
+      "composite_score": 68.91,
+      "regime": "mp4_risk_on",
+      "confidence": 65.93
+    },
+    {
+      "timestamp": "2026-04-07T17:01:34.478049+00:00",
+      "classic_score": 73.99,
+      "narrative_score": 53.75,
+      "positioning_score": 79.25,
+      "composite_score": 69.5,
+      "regime": "mp4_risk_on",
+      "confidence": 49.61
+    },
+    {
+      "timestamp": "2026-04-06T17:01:34.478049+00:00",
+      "classic_score": 70.51,
+      "narrative_score": 55.68,
+      "positioning_score": 81.86,
+      "composite_score": 69.47,
+      "regime": "mp4_risk_on",
+      "confidence": 89.03
+    },
+    {
+      "timestamp": "2026-04-05T17:01:34.478049+00:00",
+      "classic_score": 75.92,
+      "narrative_score": 50.54,
+      "positioning_score": 83.4,
+      "composite_score": 70.55,
+      "regime": "mp4_risk_on",
+      "confidence": 50.84
+    },
+    {
+      "timestamp": "2026-04-04T17:01:34.478049+00:00",
+      "classic_score": 80.76,
+      "narrative_score": 51.18,
+      "positioning_score": 81.11,
+      "composite_score": 71.99,
+      "regime": "mp4_risk_on",
+      "confidence": 90.1
+    },
+    {
+      "timestamp": "2026-04-03T17:01:34.478049+00:00",
+      "classic_score": 82.7,
+      "narrative_score": 46.45,
+      "positioning_score": 81.7,
+      "composite_score": 71.52,
+      "regime": "mp4_risk_on",
+      "confidence": 62.69
+    },
+    {
+      "timestamp": "2026-04-02T17:01:34.478049+00:00",
+      "classic_score": 83.03,
+      "narrative_score": 45.29,
+      "positioning_score": 84.45,
+      "composite_score": 72.13,
+      "regime": "mp4_risk_on",
+      "confidence": 55.77
+    },
+    {
+      "timestamp": "2026-04-01T17:01:34.478049+00:00",
+      "classic_score": 83.98,
+      "narrative_score": 49.82,
+      "positioning_score": 82.79,
+      "composite_score": 73.38,
+      "regime": "mp4_risk_on",
+      "confidence": 72.11
+    },
+    {
+      "timestamp": "2026-03-31T17:01:34.478049+00:00",
+      "classic_score": 84.59,
+      "narrative_score": 48.1,
+      "positioning_score": 84.09,
+      "composite_score": 73.49,
+      "regime": "mp4_risk_on",
+      "confidence": 70.97
+    },
+    {
+      "timestamp": "2026-03-30T17:01:34.478049+00:00",
+      "classic_score": 81.76,
+      "narrative_score": 52.5,
+      "positioning_score": 85.67,
+      "composite_score": 74.16,
+      "regime": "mp4_risk_on",
+      "confidence": 68.33
+    },
+    {
+      "timestamp": "2026-03-29T17:01:34.478049+00:00",
+      "classic_score": 79.85,
+      "narrative_score": 50.54,
+      "positioning_score": 88.13,
+      "composite_score": 73.54,
+      "regime": "mp4_risk_on",
+      "confidence": 68.54
+    },
+    {
+      "timestamp": "2026-03-28T17:01:34.478049+00:00",
+      "classic_score": 81.22,
+      "narrative_score": 50.08,
+      "positioning_score": 89.37,
+      "composite_score": 74.32,
+      "regime": "mp4_risk_on",
+      "confidence": 68.84
+    },
+    {
+      "timestamp": "2026-03-27T17:01:34.478049+00:00",
+      "classic_score": 83.52,
+      "narrative_score": 49.62,
+      "positioning_score": 90,
+      "composite_score": 75.29,
+      "regime": "mp4_risk_on",
+      "confidence": 76.72
+    }
+  ],
+  "data_points": 90,
+  "note": "Demo data"
+}

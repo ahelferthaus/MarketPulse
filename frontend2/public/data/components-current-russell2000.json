@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-06-24T17:01:34.480522+00:00",
+  "market_id": "russell2000",
+  "components": [
+    {
+      "name": "momentum",
+      "raw_value": 2.35,
+      "normalized_score": 72.5,
+      "weight": 0.143,
+      "direction": "bullish",
+      "description": "Price vs 125-day moving average",
+      "data_source": "yfinance"
+    },
+    {
+      "name": "price_strength",
+      "raw_value": 0.65,
+      "normalized_score": 65.0,
+      "weight": 0.143,
+      "direction": "bullish",
+      "description": "New highs vs new lows ratio",
+      "data_source": "yfinance"
+    },
+    {
+      "name": "breadth",
+      "raw_value": 1.85,
+      "normalized_score": 62.5,
+      "weight": 0.143,
+      "direction": "bullish",
+      "description": "Advancing vs declining volume",
+      "data_source": "yfinance"
+    },
+    {
+      "name": "put_call",
+      "raw_value": 0.85,
+      "normalized_score": 55.0,
+      "weight": 0.143,
+      "direction": "neutral",
+      "description": "CBOE put/call ratio",
+      "data_source": "CBOE"
+    },
+    {
+      "name": "credit_spreads",
+      "raw_value": 3.45,
+      "normalized_score": 45.0,
+      "weight": 0.143,
+      "direction": "bearish",
+      "description": "High yield OAS spread",
+      "data_source": "FRED"
+    },
+    {
+      "name": "volatility",
+      "raw_value": 18.5,
+      "normalized_score": 48.0,
+      "weight": 0.143,
+      "direction": "neutral",
+      "description": "VIX level",
+      "data_source": "yfinance"
+    },
+    {
+      "name": "safe_haven",
+      "raw_value": -0.25,
+      "normalized_score": 58.0,
+      "weight": 0.143,
+      "direction": "bullish",
+      "description": "Equity vs safe haven relative returns",
+      "data_source": "yfinance"
+    }
+  ],
+  "component_count": 7,
+  "note": "Demo data \u2014 no live store connected"
+}

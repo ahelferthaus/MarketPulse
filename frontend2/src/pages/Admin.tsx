@@ -21,14 +21,15 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SourceQualityBadge from "../components/SourceQualityBadge";
-import {
-  MOCK_SOURCES,
-  MOCK_COMPONENTS,
-  MOCK_CONFIDENCE,
-  MOCK_LOG_ENTRIES,
-} from "../lib/mockData";
+import { MOCK_LOG_ENTRIES } from "../lib/mockData";
+import { getSources, getComponents, getDashboard, mockDashboard } from "../lib/api";
+import { useAsync } from "../lib/useApi";
 
 export default function Admin() {
+  const sources = useAsync(() => getSources(), [], []);
+  const components = useAsync(() => getComponents("sp500"), [], []);
+  const dash = useAsync(() => getDashboard("sp500"), mockDashboard(), []);
+  const confidence = dash.confidence;
   const [logs, setLogs] = useState(MOCK_LOG_ENTRIES);
   const [lastUpdate, setLastUpdate] = useState("2026-01-15 16:30:12");
   const [refreshing, setRefreshing] = useState(false);
@@ -84,7 +85,7 @@ export default function Admin() {
             Source Status
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {MOCK_SOURCES.map((source) => (
+            {sources.map((source) => (
               <div
                 key={source.provider}
                 className="bg-white rounded-xl border border-slate-200 shadow-sm p-4"
@@ -186,9 +187,9 @@ export default function Admin() {
           </h2>
           <div className="flex items-center gap-4">
             <div className="text-4xl font-extrabold text-slate-800">
-              {MOCK_CONFIDENCE}%
+              {confidence}%
             </div>
-            <SourceQualityBadge confidence={MOCK_CONFIDENCE} />
+            <SourceQualityBadge confidence={confidence} />
           </div>
           <p className="text-sm text-slate-500 mt-2">
             Based on 4 active sources out of 6 configured. All primary data
@@ -213,7 +214,7 @@ export default function Admin() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {MOCK_COMPONENTS.map((c) => (
+              {components.map((c) => (
                 <TableRow key={c.name}>
                   <TableCell className="font-medium text-sm">{c.name}</TableCell>
                   <TableCell className="text-sm">{c.score}</TableCell>

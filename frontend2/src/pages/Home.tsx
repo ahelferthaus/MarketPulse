@@ -10,35 +10,24 @@ import PulseCard from "../components/PulseCard";
 import StackedPulseChart from "../components/StackedPulseChart";
 import ComponentBreakdown from "../components/ComponentBreakdown";
 import ExplanationBox from "../components/ExplanationBox";
-import {
-  MOCK_COMPOSITE_SCORE,
-  MOCK_REGIME,
-  MOCK_REGIME_LABEL,
-  MOCK_SUB_INDICES,
-  MOCK_CONFIDENCE,
-  MOCK_EXPLANATION,
-  MOCK_WHAT_CHANGED,
-  MOCK_WHY_IT_MATTERS,
-  MOCK_HISTORY,
-} from "../lib/mockData";
+import { MOCK_WHAT_CHANGED, MOCK_WHY_IT_MATTERS } from "../lib/mockData";
+import { getDashboard, getComponents, mockDashboard } from "../lib/api";
+import { useAsync } from "../lib/useApi";
 
 export default function Home() {
-  const latest = MOCK_HISTORY[MOCK_HISTORY.length - 1];
-  const prevDay = MOCK_HISTORY[MOCK_HISTORY.length - 2];
-  const prevWeek = MOCK_HISTORY[MOCK_HISTORY.length - 8];
+  const dash = useAsync(() => getDashboard("sp500"), mockDashboard(), []);
+  const components = useAsync(() => getComponents("sp500"), [], []);
 
-  const change1d = latest
-    ? Math.round((latest.composite - (prevDay?.composite ?? latest.composite)) * 10) / 10
-    : 0;
-  const change1w = latest
-    ? Math.round((latest.composite - (prevWeek?.composite ?? latest.composite)) * 10) / 10
-    : 0;
+  const change1d = Math.round(dash.change1d * 10) / 10;
+  const change1w = Math.round(dash.change1w * 10) / 10;
 
   // Last 30 days of history for sparklines
-  const last30 = MOCK_HISTORY.slice(-30);
+  const last30 = dash.history.slice(-30);
   const classicHistory = last30.map((h) => h.classic);
   const narrativeHistory = last30.map((h) => h.narrative);
   const positioningHistory = last30.map((h) => h.positioning);
+  const directionLabel =
+    dash.direction.charAt(0).toUpperCase() + dash.direction.slice(1);
 
   return (
     <div className="fade-in">
@@ -56,26 +45,35 @@ export default function Home() {
           </div>
 
           <PulseGauge
-            score={MOCK_COMPOSITE_SCORE}
-            regime={MOCK_REGIME}
-            label={MOCK_REGIME_LABEL}
+            score={dash.composite}
+            regime={dash.regime}
+            label={dash.regimeLabel}
             change1d={change1d}
             change1w={change1w}
           />
 
           <p className="mt-6 text-slate-300 text-sm max-w-xl leading-relaxed">
-            {MOCK_EXPLANATION}
+            {dash.explanation}
           </p>
           <p className="mt-2 text-slate-500 text-xs">
-            Last updated: January 15, 2026 at 4:30 PM ET
+            Confidence {dash.confidence}% &middot; {dash.regimeLabel}
           </p>
 
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-2xl">
             {[
-              { label: "Confidence", value: `${MOCK_CONFIDENCE}%` },
-              { label: "Direction", value: "Rising", color: "#22C55E" },
-              { label: "S&P 500", value: `4,${(Math.round(latest?.sp500 ?? 0)).toLocaleString()}` },
+              { label: "Confidence", value: `${dash.confidence}%` },
+              {
+                label: "Direction",
+                value: directionLabel,
+                color:
+                  dash.direction === "rising"
+                    ? "#22C55E"
+                    : dash.direction === "falling"
+                      ? "#EF4444"
+                      : undefined,
+              },
+              { label: "S&P 500", value: Math.round(dash.sp500Level).toLocaleString() },
               { label: "Data Sources", value: "4/6 Active" },
             ].map((stat) => (
               <div
@@ -101,29 +99,29 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <PulseCard
             name="Classic"
-            score={MOCK_SUB_INDICES.classic.score}
-            change1d={MOCK_SUB_INDICES.classic.change1d}
-            change1w={MOCK_SUB_INDICES.classic.change1w}
-            regime={MOCK_SUB_INDICES.classic.label}
-            confidence={MOCK_SUB_INDICES.classic.confidence}
+            score={dash.subIndices.classic.score}
+            change1d={dash.subIndices.classic.change1d}
+            change1w={dash.subIndices.classic.change1w}
+            regime={dash.subIndices.classic.label}
+            confidence={dash.subIndices.classic.confidence}
             history={classicHistory}
           />
           <PulseCard
             name="Narrative"
-            score={MOCK_SUB_INDICES.narrative.score}
-            change1d={MOCK_SUB_INDICES.narrative.change1d}
-            change1w={MOCK_SUB_INDICES.narrative.change1w}
-            regime={MOCK_SUB_INDICES.narrative.label}
-            confidence={MOCK_SUB_INDICES.narrative.confidence}
+            score={dash.subIndices.narrative.score}
+            change1d={dash.subIndices.narrative.change1d}
+            change1w={dash.subIndices.narrative.change1w}
+            regime={dash.subIndices.narrative.label}
+            confidence={dash.subIndices.narrative.confidence}
             history={narrativeHistory}
           />
           <PulseCard
             name="Positioning"
-            score={MOCK_SUB_INDICES.positioning.score}
-            change1d={MOCK_SUB_INDICES.positioning.change1d}
-            change1w={MOCK_SUB_INDICES.positioning.change1w}
-            regime={MOCK_SUB_INDICES.positioning.label}
-            confidence={MOCK_SUB_INDICES.positioning.confidence}
+            score={dash.subIndices.positioning.score}
+            change1d={dash.subIndices.positioning.change1d}
+            change1w={dash.subIndices.positioning.change1w}
+            regime={dash.subIndices.positioning.label}
+            confidence={dash.subIndices.positioning.confidence}
             history={positioningHistory}
           />
         </div>
@@ -131,7 +129,7 @@ export default function Home() {
 
       {/* Stacked Chart */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 pb-8">
-        <StackedPulseChart />
+        <StackedPulseChart data={dash.history} />
       </section>
 
       {/* Explanation Boxes */}
@@ -153,7 +151,7 @@ export default function Home() {
 
       {/* Component Breakdown */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 pb-8">
-        <ComponentBreakdown />
+        <ComponentBreakdown components={components} />
       </section>
 
       {/* Bottom CTA */}

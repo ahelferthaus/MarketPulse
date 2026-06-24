@@ -19,7 +19,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { REGIME_DEFINITIONS, MOCK_SOURCES } from "../lib/mockData";
+import { REGIME_DEFINITIONS } from "../lib/mockData";
+import { getSources } from "../lib/api";
+import { useAsync } from "../lib/useApi";
 
 const indexCards = [
   {
@@ -132,6 +134,7 @@ const faqItems = [
 ];
 
 export default function Methodology() {
+  const sources = useAsync(() => getSources(), [], []);
   return (
     <div className="fade-in">
       {/* Hero */}
@@ -275,7 +278,7 @@ export default function Methodology() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {MOCK_SOURCES.map((s) => (
+              {sources.map((s) => (
                 <TableRow key={s.provider}>
                   <TableCell className="font-medium text-sm">
                     {s.provider}

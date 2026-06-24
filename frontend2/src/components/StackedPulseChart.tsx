@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import { MOCK_HISTORY } from "../lib/mockData";
+import { MOCK_HISTORY, type HistoryPoint } from "../lib/mockData";
 
 const zoneLines = [20, 40, 60, 80];
 
@@ -46,8 +46,11 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   );
 }
 
-export default function StackedPulseChart() {
-  const data = MOCK_HISTORY;
+interface StackedPulseChartProps {
+  data?: HistoryPoint[];
+}
+
+export default function StackedPulseChart({ data = MOCK_HISTORY }: StackedPulseChartProps) {
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 fade-in">

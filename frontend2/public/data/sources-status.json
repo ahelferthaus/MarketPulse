@@ -1,0 +1,150 @@
+{
+  "providers": [
+    {
+      "provider": "yfinance",
+      "display_name": "Yahoo Finance",
+      "available": true,
+      "tier": "public",
+      "description": "Free market data from Yahoo Finance",
+      "last_successful_fetch": "2026-06-24T16:46:34.483463+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "price_history",
+        "current_quote",
+        "volatility"
+      ]
+    },
+    {
+      "provider": "fred",
+      "display_name": "FRED (Federal Reserve)",
+      "available": true,
+      "tier": "public",
+      "description": "Economic data from the Federal Reserve Bank of St. Louis",
+      "last_successful_fetch": "2026-06-24T16:46:34.483481+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "credit_spreads",
+        "economic_indicators"
+      ]
+    },
+    {
+      "provider": "fmp",
+      "display_name": "Financial Modeling Prep",
+      "available": true,
+      "tier": "premium",
+      "description": "Financial data API (premium subscription required)",
+      "last_successful_fetch": "2026-06-24T16:46:34.483494+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "price_history",
+        "breadth_data",
+        "options_data"
+      ]
+    },
+    {
+      "provider": "cboe",
+      "display_name": "CBOE",
+      "available": true,
+      "tier": "public",
+      "description": "Options and volatility data from CBOE",
+      "last_successful_fetch": "2026-06-24T16:46:34.483503+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "put_call_ratio",
+        "vix_data"
+      ]
+    },
+    {
+      "provider": "rss_news",
+      "display_name": "RSS News Feeds",
+      "available": true,
+      "tier": "public",
+      "description": "Financial news from RSS feeds",
+      "last_successful_fetch": "2026-06-24T16:46:34.483512+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "news_articles"
+      ]
+    },
+    {
+      "provider": "manual_csv",
+      "display_name": "Manual CSV Upload",
+      "available": true,
+      "tier": "public",
+      "description": "Manually uploaded CSV data files",
+      "last_successful_fetch": "2026-06-24T16:46:34.483520+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "custom_data"
+      ]
+    },
+    {
+      "provider": "bloomberg_mcp",
+      "display_name": "Bloomberg (MCP)",
+      "available": false,
+      "tier": "professional",
+      "description": "Bloomberg terminal via MCP integration (stub)",
+      "last_successful_fetch": null,
+      "error_count_24h": 0,
+      "avg_response_ms": null,
+      "data_freshness_minutes": null,
+      "endpoints": []
+    },
+    {
+      "provider": "morningstar_mcp",
+      "display_name": "Morningstar (MCP)",
+      "available": false,
+      "tier": "professional",
+      "description": "Morningstar data via MCP integration (stub)",
+      "last_successful_fetch": null,
+      "error_count_24h": 0,
+      "avg_response_ms": null,
+      "data_freshness_minutes": null,
+      "endpoints": []
+    },
+    {
+      "provider": "twitter",
+      "display_name": "X / Twitter",
+      "available": true,
+      "tier": "premium",
+      "description": "Social media sentiment from X (stub)",
+      "last_successful_fetch": "2026-06-24T16:46:34.483532+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "social_posts"
+      ]
+    },
+    {
+      "provider": "reddit",
+      "display_name": "Reddit",
+      "available": true,
+      "tier": "public",
+      "description": "Social sentiment from Reddit (stub)",
+      "last_successful_fetch": "2026-06-24T16:46:34.483540+00:00",
+      "error_count_24h": 0,
+      "avg_response_ms": 250,
+      "data_freshness_minutes": 15,
+      "endpoints": [
+        "social_posts"
+      ]
+    }
+  ],
+  "total": 10,
+  "available": 8,
+  "unavailable": 2,
+  "timestamp": "2026-06-24T17:01:34.483554+00:00"
+}
