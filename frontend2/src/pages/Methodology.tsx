@@ -4,10 +4,6 @@ import {
   Layers,
   Activity,
   TrendingUp,
-  ArrowDownRight,
-  Minus,
-  Database,
-  ChevronDown,
 } from "lucide-react";
 import {
   Accordion,

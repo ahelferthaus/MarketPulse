@@ -25,7 +25,6 @@ import {
 import {
   FORWARD_RETURNS,
   REGIME_TRANSITIONS,
-  REGIME_DEFINITIONS,
 } from "../lib/mockData";
 
 interface TooltipPayloadItem {

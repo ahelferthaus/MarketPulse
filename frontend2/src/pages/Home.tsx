@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import {
   Activity,
   BookOpen,
-  TrendingUp,
   MessageSquare,
   Layers,
 } from "lucide-react";

@@ -19,11 +19,6 @@ export default function EmbedWidget({ size, theme }: EmbedWidgetProps) {
   const sub = isDark ? "#94A3B8" : "#64748B";
   const border = isDark ? "#1E293B" : "#E2E8F0";
 
-  const regimeDef = REGIME_DEFINITIONS.find(
-    (r) => r.label === MOCK_REGIME_LABEL
-  );
-  const color = regimeDef?.color ?? "#22C55E";
-
   const wrapperClasses =
     size === "small"
       ? "max-w-xs"
