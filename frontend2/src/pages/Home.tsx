@@ -1,179 +1,194 @@
 import { Link } from "react-router";
-import {
-  Activity,
-  BookOpen,
-  MessageSquare,
-  Layers,
-} from "lucide-react";
+import { MessageSquare, BookOpen, ArrowRight } from "lucide-react";
 import PulseGauge from "../components/PulseGauge";
 import PulseCard from "../components/PulseCard";
 import StackedPulseChart from "../components/StackedPulseChart";
 import ComponentBreakdown from "../components/ComponentBreakdown";
 import ExplanationBox from "../components/ExplanationBox";
-import { MOCK_WHAT_CHANGED, MOCK_WHY_IT_MATTERS } from "../lib/mockData";
-import { getDashboard, getComponents, mockDashboard } from "../lib/api";
+import { getDashboard, getComponents, getSources, mockDashboard, freshness, DATA_MODE } from "../lib/api";
 import { useAsync } from "../lib/useApi";
+import { ZONES, zoneFor, headline, BRAND } from "../lib/theme";
+
+const SUB_BLURBS: Record<string, string> = {
+  Classic: "Prices, volatility, breadth, credit — what the market is doing.",
+  Narrative: "News and financial text — what the market is saying.",
+  Positioning: "Options, term structure, safe havens — where money is leaning.",
+};
 
 export default function Home() {
   const dash = useAsync(() => getDashboard("sp500"), mockDashboard(), []);
   const components = useAsync(() => getComponents("sp500"), [], []);
+  const sources = useAsync(() => getSources(), [], []);
 
   const change1d = Math.round(dash.change1d * 10) / 10;
   const change1w = Math.round(dash.change1w * 10) / 10;
+  const zone = zoneFor(dash.composite);
 
-  // Last 30 days of history for sparklines
   const last30 = dash.history.slice(-30);
-  const classicHistory = last30.map((h) => h.classic);
-  const narrativeHistory = last30.map((h) => h.narrative);
-  const positioningHistory = last30.map((h) => h.positioning);
-  const directionLabel =
-    dash.direction.charAt(0).toUpperCase() + dash.direction.slice(1);
+  const activeSources = sources.filter((s) => s.available).length;
 
   return (
     <div className="fade-in">
-      {/* Hero */}
+      {/* ── Hero: the barometer ─────────────────────────────────── */}
       <section
-        className="py-12 md:py-16 px-4 md:px-8"
-        style={{ backgroundColor: "#0A1628" }}
+        className="px-4 md:px-8"
+        style={{
+          background: `radial-gradient(1100px 520px at 30% 0%, ${BRAND.navy800}66, transparent 62%), linear-gradient(170deg, ${BRAND.navy900} 0%, ${BRAND.navy950} 78%)`,
+        }}
       >
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
-          <div className="flex items-center gap-2 mb-6">
-            <Activity size={16} className="text-emerald-400" />
-            <span className="text-emerald-400 text-sm font-medium">
-              Live &middot; Updated 2 min ago
-            </span>
+        <div className="max-w-7xl mx-auto py-10 md:py-14 grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-10 items-center">
+          {/* dial */}
+          <div className="order-2 lg:order-1">
+            <PulseGauge
+              score={dash.composite}
+              regime={dash.regime}
+              label={dash.regimeLabel}
+              change1d={change1d}
+              change1w={change1w}
+            />
           </div>
 
-          <PulseGauge
-            score={dash.composite}
-            regime={dash.regime}
-            label={dash.regimeLabel}
-            change1d={change1d}
-            change1w={change1w}
-          />
+          {/* today's read */}
+          <div className="order-1 lg:order-2">
+            <div className="text-[11px] font-semibold uppercase" style={{ color: BRAND.gold, letterSpacing: "0.22em" }}>
+              Market barometer · S&amp;P 500
+            </div>
+            <h1
+              className="font-display text-white mt-3 leading-tight"
+              style={{ fontSize: "clamp(28px, 3.4vw, 42px)", fontWeight: 600 }}
+            >
+              {headline(zone.id, dash.direction)}
+            </h1>
+            <p className="mt-4 text-[15px] leading-relaxed" style={{ color: "rgba(255,255,255,0.72)" }}>
+              {dash.explanation}
+            </p>
 
-          <p className="mt-6 text-slate-300 text-sm max-w-xl leading-relaxed">
-            {dash.explanation}
-          </p>
-          <p className="mt-2 text-slate-500 text-xs">
-            Confidence {dash.confidence}% &middot; {dash.regimeLabel}
-          </p>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full max-w-2xl">
-            {[
-              { label: "Confidence", value: `${dash.confidence}%` },
-              {
-                label: "Direction",
-                value: directionLabel,
-                color:
-                  dash.direction === "rising"
-                    ? "#22C55E"
-                    : dash.direction === "falling"
-                      ? "#EF4444"
-                      : undefined,
-              },
-              { label: "S&P 500", value: Math.round(dash.sp500Level).toLocaleString() },
-              { label: "Data Sources", value: "4/6 Active" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-lg p-3 text-center"
-                style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
-              >
-                <div
-                  className="text-lg font-bold"
-                  style={{ color: stat.color ?? "#F8FAFC" }}
-                >
-                  {stat.value}
-                </div>
-                <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
+            {/* confidence */}
+            <div className="mt-6 max-w-sm">
+              <div className="flex items-baseline justify-between text-[11px] mb-1.5">
+                <span className="uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  Data confidence
+                </span>
+                <span className="font-data" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  {dash.confidence}%{sources.length > 0 && ` · ${activeSources} of ${sources.length} sources reporting`}
+                </span>
               </div>
-            ))}
+              <div className="h-[5px] rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.12)" }}>
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${dash.confidence}%`,
+                    background: `linear-gradient(90deg, ${BRAND.goldDeep}, ${BRAND.gold})`,
+                    transition: "width 1s ease-out",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* as-of — honest, from the payload */}
+            <p className="font-data text-[11px] mt-6" style={{ color: "rgba(255,255,255,0.42)" }}>
+              As of {freshness(dash.asOf)} · {DATA_MODE === "live" ? "live API" : "static snapshot, refreshed daily"}
+            </p>
+          </div>
+        </div>
+
+        {/* zone strip — the framework, with today highlighted */}
+        <div className="max-w-7xl mx-auto pb-10">
+          <div className="grid grid-cols-5 gap-[3px] rounded-lg overflow-hidden" role="list" aria-label="The five MarketPulse zones">
+            {ZONES.map((z) => {
+              const active = z.id === zone.id;
+              return (
+                <div
+                  key={z.id}
+                  role="listitem"
+                  className="px-2 py-2.5 text-center transition-all"
+                  style={{
+                    backgroundColor: active ? z.onNavy : "rgba(255,255,255,0.05)",
+                    boxShadow: active ? "inset 0 0 0 1px rgba(255,255,255,0.35)" : "none",
+                  }}
+                >
+                  <div
+                    className="font-data text-[10px]"
+                    style={{ color: active ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)" }}
+                  >
+                    {z.zone} · {z.min}–{z.max}
+                  </div>
+                  <div
+                    className="text-[12px] font-semibold mt-0.5"
+                    style={{ color: active ? "#fff" : "rgba(255,255,255,0.55)" }}
+                  >
+                    {z.label}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Sub-Index Cards */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+      {/* ── Three lenses ────────────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 pt-10">
+        <div className="mp-eyebrow mb-3">Three lenses, one composite</div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <PulseCard
-            name="Classic"
-            score={dash.subIndices.classic.score}
-            change1d={dash.subIndices.classic.change1d}
-            change1w={dash.subIndices.classic.change1w}
-            regime={dash.subIndices.classic.label}
-            confidence={dash.subIndices.classic.confidence}
-            history={classicHistory}
-          />
-          <PulseCard
-            name="Narrative"
-            score={dash.subIndices.narrative.score}
-            change1d={dash.subIndices.narrative.change1d}
-            change1w={dash.subIndices.narrative.change1w}
-            regime={dash.subIndices.narrative.label}
-            confidence={dash.subIndices.narrative.confidence}
-            history={narrativeHistory}
-          />
-          <PulseCard
-            name="Positioning"
-            score={dash.subIndices.positioning.score}
-            change1d={dash.subIndices.positioning.change1d}
-            change1w={dash.subIndices.positioning.change1w}
-            regime={dash.subIndices.positioning.label}
-            confidence={dash.subIndices.positioning.confidence}
-            history={positioningHistory}
-          />
+          {(["classic", "narrative", "positioning"] as const).map((key) => {
+            const s = dash.subIndices[key];
+            const name = key.charAt(0).toUpperCase() + key.slice(1);
+            return (
+              <PulseCard
+                key={key}
+                name={name}
+                score={s.score}
+                change1d={s.change1d}
+                change1w={s.change1w}
+                regime={s.label}
+                confidence={s.confidence}
+                history={last30.map((h) => h[key])}
+                blurb={SUB_BLURBS[name]}
+              />
+            );
+          })}
         </div>
       </section>
 
-      {/* Stacked Chart */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-8">
+      {/* ── History ─────────────────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 pt-8">
         <StackedPulseChart data={dash.history} />
       </section>
 
-      {/* Explanation Boxes */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* ── What changed (only when the backend actually says) ──── */}
+      {dash.whatChanged && (
+        <section className="max-w-7xl mx-auto px-4 md:px-8 pt-8">
           <ExplanationBox
-            icon={<MessageSquare size={18} />}
-            title="What Changed"
-            text={MOCK_WHAT_CHANGED}
-            timestamp="Jan 15, 2026 4:30 PM ET"
+            icon={<MessageSquare size={17} />}
+            title="What changed"
+            text={dash.whatChanged}
+            timestamp={dash.asOf ? `As of ${freshness(dash.asOf)}` : undefined}
           />
-          <ExplanationBox
-            icon={<BookOpen size={18} />}
-            title="Why It Matters"
-            text={MOCK_WHY_IT_MATTERS}
-          />
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Component Breakdown */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-8">
+      {/* ── Components ──────────────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 pt-8">
         <ComponentBreakdown components={components} />
       </section>
 
-      {/* Bottom CTA */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 pb-12">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8 text-center">
-          <Layers size={32} className="mx-auto mb-4 text-slate-400" />
-          <h3 className="text-lg font-bold text-slate-800 mb-2">
-            Understand the Methodology
-          </h3>
-          <p className="text-sm text-slate-500 mb-4 max-w-md mx-auto">
-            Dive deeper into how MarketPulse scores are calculated, what data
-            sources we use, and how to interpret the signals.
-          </p>
-          <Link
-            to="/methodology"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-colors hover:opacity-90"
-            style={{ backgroundColor: "#0A1628" }}
-          >
-            <BookOpen size={16} />
-            Explore our methodology
-          </Link>
-        </div>
+      {/* ── Methodology link — quiet ────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <Link
+          to="/methodology"
+          className="mp-panel flex items-center gap-4 p-5 transition-shadow hover:shadow-md group"
+        >
+          <BookOpen size={20} style={{ color: BRAND.goldDeep }} />
+          <div>
+            <div className="text-[14px] font-semibold" style={{ color: BRAND.ink }}>
+              How the barometer is built
+            </div>
+            <div className="text-[12.5px]" style={{ color: BRAND.slate }}>
+              Nine components, three lenses, five zones — the full methodology, openly documented.
+            </div>
+          </div>
+          <ArrowRight size={18} className="ml-auto transition-transform group-hover:translate-x-1" style={{ color: BRAND.slateFaint }} />
+        </Link>
       </section>
     </div>
   );

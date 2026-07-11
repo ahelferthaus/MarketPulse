@@ -73,3 +73,7 @@ dist/
 # Misc
 *.bak
 *.tmp
+
+# Runtime data
+.data/
+data/

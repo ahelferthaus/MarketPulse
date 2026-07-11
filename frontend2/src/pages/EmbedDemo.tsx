@@ -19,10 +19,10 @@ export default function EmbedDemo() {
   return (
     <div className="fade-in">
       {/* Header */}
-      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0A1628" }}>
+      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0B2240" }}>
         <div className="max-w-7xl mx-auto text-center">
           <Code2 size={36} className="mx-auto mb-3 text-emerald-400" />
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-2">
+          <h1 className="font-display text-2xl md:text-3xl font-semibold text-white mb-2">
             Embed MarketPulse
           </h1>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">

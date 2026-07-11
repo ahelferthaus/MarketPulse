@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/inter";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
 @tailwind base;
 @tailwind components;
@@ -6,50 +9,94 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    /* ── MarketPulse brand tokens ─────────────────────────────── */
+    --mp-navy-950: #081A33;
+    --mp-navy-900: #0B2240;
+    --mp-navy-800: #14355C;
+    --mp-ink: #16233A;
+    --mp-paper: #F5F6F8;
+    --mp-card: #FFFFFF;
+    --mp-hairline: #E2E6EC;
+    --mp-gold: #C8A951;
+    --mp-gold-deep: #A8842F;
+    --mp-slate: #5C6B80;
+    --mp-slate-faint: #8B96A5;
+
+    /* shadcn/ui compatibility layer (kept for ui/* components) */
+    --background: 220 20% 97%;
+    --foreground: 217 45% 16%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 217 45% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --popover-foreground: 217 45% 16%;
+    --primary: 214 71% 15%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 220 18% 94%;
+    --secondary-foreground: 217 45% 16%;
+    --muted: 220 18% 94%;
+    --muted-foreground: 215 16% 43%;
+    --accent: 220 18% 94%;
+    --accent-foreground: 217 45% 16%;
+    --destructive: 5 55% 44%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.625rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 216 17% 91%;
+    --input: 216 17% 91%;
+    --ring: 43 42% 55%;
+    --radius: 0.5rem;
   }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: #F8FAFC;
-    color: #0F172A;
+    font-family: "Inter Variable", "Segoe UI", system-ui, sans-serif;
+    background-color: var(--mp-paper);
+    color: var(--mp-ink);
+    font-feature-settings: "cv11";
+  }
+
+  ::selection {
+    background: rgba(200, 169, 81, 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--mp-gold-deep);
+    outline-offset: 2px;
   }
 }
 
 @layer components {
-  .card-shadow {
-    @apply shadow-sm;
+  .font-display {
+    font-family: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
   }
-  .card-shadow-hover {
-    @apply shadow-lg;
+  .font-data {
+    font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
   }
+  .num-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Section eyebrow — small caps tracking, gold tick */
+  .mp-eyebrow {
+    @apply text-[11px] font-semibold uppercase;
+    letter-spacing: 0.18em;
+    color: var(--mp-slate);
+  }
+  .mp-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: var(--mp-gold);
+    margin-right: 10px;
+    vertical-align: 3px;
+  }
+
+  /* Card panel */
+  .mp-panel {
+    background: var(--mp-card);
+    border: 1px solid var(--mp-hairline);
+    border-radius: 10px;
+  }
+
   .fade-in {
     animation: fadeIn 0.5s ease-out;
   }
@@ -58,4 +105,9 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { animation: none; }
+  * { transition-duration: 0.01ms !important; }
 }

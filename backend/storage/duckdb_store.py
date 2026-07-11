@@ -154,6 +154,18 @@ class DuckDBStore:
             conn.rollback()
             raise
 
+    def query(self, sql: str, params: Optional[list] = None) -> list:
+        """Run a read query and return rows as dicts (column-name keyed).
+
+        The API route handlers use this generic accessor for ad-hoc reads
+        (latest component scores, provider status) and consume rows via
+        ``row.get(...)`` — so rows must be dicts, not tuples.
+        """
+        with self._cursor() as conn:
+            cur = conn.execute(sql, params or [])
+            columns = [d[0] for d in cur.description] if cur.description else []
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+
     # ── Database initialization ───────────────────────────────────────────
 
     def init_database(self) -> None:

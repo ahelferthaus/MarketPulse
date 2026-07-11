@@ -1,22 +1,30 @@
-import { REGIME_DEFINITIONS } from "../lib/mockData";
+import { zoneFor, zoneById } from "../lib/theme";
 
 interface RegimeBadgeProps {
-  regime: string;
-  label: string;
+  /** Either a 0-100 score or a regime id / label. */
+  score?: number;
+  regime?: string;
+  label?: string;
 }
 
-export default function RegimeBadge({ label }: RegimeBadgeProps) {
-  const regimeDef = REGIME_DEFINITIONS.find(
-    (r) => r.label.toLowerCase() === label.toLowerCase()
-  );
-  const color = regimeDef?.color ?? "#6B7280";
-
+/** Zone chip: tinted ground, colored text + border — contrast-safe on white. */
+export default function RegimeBadge({ score, regime, label }: RegimeBadgeProps) {
+  const zone =
+    score != null
+      ? zoneFor(score)
+      : zoneById(regime ?? "") ??
+        zoneFor(50);
+  const text = label ?? zone.label;
   return (
     <span
-      className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-white"
-      style={{ backgroundColor: color }}
+      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide"
+      style={{
+        color: zone.text,
+        backgroundColor: `${zone.onPaper}14`,
+        border: `1px solid ${zone.onPaper}55`,
+      }}
     >
-      {label}
+      {text}
     </span>
   );
 }

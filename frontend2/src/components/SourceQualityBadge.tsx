@@ -5,14 +5,14 @@ interface SourceQualityBadgeProps {
 export default function SourceQualityBadge({ confidence }: SourceQualityBadgeProps) {
   const color =
     confidence >= 90
-      ? "#22C55E"
+      ? "#6F9A3D"
       : confidence >= 70
-        ? "#3B82F6"
+        ? "#3B82D6"
         : confidence >= 50
           ? "#EAB308"
           : confidence >= 30
-            ? "#F97316"
-            : "#DC2626";
+            ? "#C4791F"
+            : "#B3382E";
 
   const label =
     confidence >= 90

@@ -140,11 +140,11 @@ export default function Methodology() {
       {/* Hero */}
       <section
         className="py-12 md:py-16 px-4 md:px-8"
-        style={{ backgroundColor: "#0A1628" }}
+        style={{ backgroundColor: "#0B2240" }}
       >
         <div className="max-w-7xl mx-auto text-center">
           <BarChart3 size={40} className="mx-auto mb-4 text-blue-400" />
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3">
+          <h1 className="font-display text-3xl md:text-4xl font-semibold text-white mb-3">
             How MarketPulse Works
           </h1>
           <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
@@ -289,16 +289,16 @@ export default function Methodology() {
                       style={{
                         backgroundColor:
                           s.tier === "public"
-                            ? "#22C55E18"
+                            ? "#6F9A3D18"
                             : s.tier === "premium"
-                              ? "#3B82F618"
-                              : "#A855F718",
+                              ? "#3B82D618"
+                              : "#6E3F8718",
                         color:
                           s.tier === "public"
-                            ? "#22C55E"
+                            ? "#6F9A3D"
                             : s.tier === "premium"
-                              ? "#3B82F6"
-                              : "#A855F7",
+                              ? "#3B82D6"
+                              : "#6E3F87",
                       }}
                     >
                       {s.tier}
@@ -309,7 +309,7 @@ export default function Methodology() {
                       <div
                         className="w-2 h-2 rounded-full"
                         style={{
-                          backgroundColor: s.available ? "#22C55E" : "#DC2626",
+                          backgroundColor: s.available ? "#6F9A3D" : "#B3382E",
                         }}
                       />
                       <span className="text-sm">

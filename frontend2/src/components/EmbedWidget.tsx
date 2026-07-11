@@ -37,7 +37,7 @@ export default function EmbedWidget({ size, theme }: EmbedWidgetProps) {
           <div>
             <div
               className="text-xs font-bold tracking-widest uppercase mb-1"
-              style={{ color: "#D4AF37" }}
+              style={{ color: "#C8A951" }}
             >
               WESTWOOD
             </div>
@@ -62,7 +62,7 @@ export default function EmbedWidget({ size, theme }: EmbedWidgetProps) {
           const rDef = REGIME_DEFINITIONS.find(
             (r) => r.label === data.label
           );
-          const c = rDef?.color ?? "#22C55E";
+          const c = rDef?.color ?? "#6F9A3D";
           return (
             <div key={key}>
               <div className="flex items-center justify-between mb-1">
@@ -104,7 +104,7 @@ export default function EmbedWidget({ size, theme }: EmbedWidgetProps) {
       >
         <span className="text-xs" style={{ color: sub }}>
           Powered by{" "}
-          <span className="font-semibold" style={{ color: "#D4AF37" }}>
+          <span className="font-semibold" style={{ color: "#C8A951" }}>
             Westwood MarketPulse
           </span>
         </span>

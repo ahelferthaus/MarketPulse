@@ -70,18 +70,18 @@ export default function Markets() {
   const subs = dash.subIndices;
 
   const subColors: Record<string, string> = {
-    classic: "#3B82F6",
-    narrative: "#A855F7",
-    positioning: "#22C55E",
+    classic: "#3B82D6",
+    narrative: "#6E3F87",
+    positioning: "#6F9A3D",
   };
 
   return (
     <div className="fade-in">
       {/* Hero */}
-      <section className="py-10 md:py-14 px-4 md:px-8" style={{ backgroundColor: "#0A1628" }}>
+      <section className="py-10 md:py-14 px-4 md:px-8" style={{ backgroundColor: "#0B2240" }}>
         <div className="max-w-7xl mx-auto text-center">
           <Globe size={36} className="mx-auto mb-3 text-blue-400" />
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+          <h1 className="font-display text-3xl md:text-4xl font-semibold text-white mb-2">
             Market Coverage
           </h1>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">
@@ -112,7 +112,7 @@ export default function Markets() {
             </div>
             <div className="flex items-center gap-4">
               <div className="text-center">
-                <div className="text-4xl font-extrabold text-slate-800">{dash.composite}</div>
+                <div className="font-display num-tabular text-4xl font-semibold text-slate-800">{dash.composite}</div>
                 <RegimeBadge regime={dash.regime} label={dash.regimeLabel} />
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function Markets() {
                   {data.label}
                 </span>
               </div>
-              <div className="text-3xl font-extrabold text-slate-800 mb-2">{data.score}</div>
+              <div className="font-display num-tabular text-3xl font-semibold text-slate-800 mb-2">{data.score}</div>
               <div className="flex items-center gap-3 text-xs">
                 <div className="flex items-center gap-1">
                   {data.change1d >= 0 ? (
@@ -175,10 +175,10 @@ export default function Markets() {
               <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={30} />
               <Tooltip content={<CustomTooltip />} />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Line type="monotone" dataKey="S&P 500" stroke="#3B82F6" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Nasdaq 100" stroke="#A855F7" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Russell 2000" stroke="#F97316" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="Dow" stroke="#22C55E" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="S&P 500" stroke="#3B82D6" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Nasdaq 100" stroke="#6E3F87" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Russell 2000" stroke="#C4791F" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Dow" stroke="#6F9A3D" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -208,8 +208,8 @@ export default function Markets() {
                     <span
                       className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize"
                       style={{
-                        backgroundColor: c.direction === "bullish" ? "#22C55E18" : c.direction === "bearish" ? "#DC262618" : "#6B728018",
-                        color: c.direction === "bullish" ? "#22C55E" : c.direction === "bearish" ? "#DC2626" : "#6B7280",
+                        backgroundColor: c.direction === "bullish" ? "#6F9A3D18" : c.direction === "bearish" ? "#B3382E18" : "#8B93A118",
+                        color: c.direction === "bullish" ? "#6F9A3D" : c.direction === "bearish" ? "#B3382E" : "#8B93A1",
                       }}
                     >
                       {c.direction}

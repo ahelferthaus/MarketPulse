@@ -60,11 +60,11 @@ export default function Admin() {
   return (
     <div className="fade-in">
       {/* Header */}
-      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0A1628" }}>
+      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0B2240" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-2">
             <Shield size={24} className="text-amber-400" />
-            <h1 className="text-2xl md:text-3xl font-extrabold text-white">
+            <h1 className="font-display text-2xl md:text-3xl font-semibold text-white">
               Admin &amp; Diagnostics
             </h1>
             <Badge variant="outline" className="text-amber-400 border-amber-400 text-xs">
@@ -186,7 +186,7 @@ export default function Admin() {
             Confidence Score
           </h2>
           <div className="flex items-center gap-4">
-            <div className="text-4xl font-extrabold text-slate-800">
+            <div className="font-display num-tabular text-4xl font-semibold text-slate-800">
               {confidence}%
             </div>
             <SourceQualityBadge confidence={confidence} />
@@ -230,12 +230,12 @@ export default function Admin() {
                       style={{
                         backgroundColor:
                           c.direction === "bullish"
-                            ? "#22C55E18"
-                            : "#DC262618",
+                            ? "#6F9A3D18"
+                            : "#B3382E18",
                         color:
                           c.direction === "bullish"
-                            ? "#22C55E"
-                            : "#DC2626",
+                            ? "#6F9A3D"
+                            : "#B3382E",
                       }}
                     >
                       {c.direction}

@@ -74,11 +74,11 @@ function band(score: number) {
 }
 
 const REGIME_COLORS: Record<string, string> = {
-  mp1_capitulation: "#DC2626",
-  mp2_defensive: "#F97316",
-  mp3_neutral: "#6B7280",
-  mp4_risk_on: "#22C55E",
-  mp5_euphoria: "#10B981",
+  mp1_capitulation: "#B3382E",
+  mp2_defensive: "#C4791F",
+  mp3_neutral: "#8B93A1",
+  mp4_risk_on: "#6F9A3D",
+  mp5_euphoria: "#1F7A4D",
 };
 
 function titleCase(name: string): string {
@@ -122,6 +122,10 @@ export interface Dashboard {
   subIndices: { classic: SubIndex; narrative: SubIndex; positioning: SubIndex };
   history: HistoryPoint[];
   sp500Level: number;
+  /** ISO timestamp of the scores payload — null when only mock data exists. */
+  asOf: string | null;
+  /** Day-over-day narrative from the backend — null when not provided. */
+  whatChanged: string | null;
 }
 
 function mapHistory(raw: any): HistoryPoint[] {
@@ -178,6 +182,8 @@ export function mockDashboard(): Dashboard {
     },
     history,
     sp500Level: last?.sp500 ?? 4200,
+    asOf: null,
+    whatChanged: null,
   };
 }
 
@@ -228,10 +234,26 @@ export async function getDashboard(market = "sp500"): Promise<Dashboard> {
       },
       history,
       sp500Level: last.sp500,
+      asOf: typeof scores.timestamp === "string" ? scores.timestamp : null,
+      whatChanged:
+        typeof scores.what_changed === "string" && scores.what_changed.trim()
+          ? scores.what_changed
+          : null,
     };
   } catch {
     return mockDashboard();
   }
+}
+
+/** Human-readable freshness for the as-of line. */
+export function freshness(iso: string | null): string {
+  if (!iso) return "sample data";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "sample data";
+  const dateStr = d.toLocaleDateString("en-US", {
+    month: "short", day: "numeric", year: "numeric",
+  });
+  return `${dateStr} · ${timeAgo(iso)}`;
 }
 
 // ── Components ───────────────────────────────────────────────────────────────
@@ -323,7 +345,7 @@ export async function getForwardReturns(
       return {
         regime: `${matched?.zone ?? ""} ${label}`.trim(),
         range: r.score_range ?? "",
-        color: matched ? REGIME_COLORS[matched.regime] : "#6B7280",
+        color: matched ? REGIME_COLORS[matched.regime] : "#8B93A1",
         m1: mean("1m"),
         m3: mean("3m"),
         m6: mean("6m"),

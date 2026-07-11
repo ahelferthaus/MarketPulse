@@ -75,9 +75,9 @@ export default function Backtest() {
   return (
     <div className="fade-in">
       {/* Header */}
-      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0A1628" }}>
+      <section className="py-8 md:py-10 px-4 md:px-8" style={{ backgroundColor: "#0B2240" }}>
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-2">
+          <h1 className="font-display text-2xl md:text-3xl font-semibold text-white mb-2">
             Historical Analysis
           </h1>
           <p className="text-slate-400 text-sm max-w-xl mx-auto">
@@ -90,7 +90,7 @@ export default function Backtest() {
       <section className="max-w-7xl mx-auto px-4 md:px-8 pt-6">
         <div
           className="rounded-xl p-4 border-l-4"
-          style={{ backgroundColor: "#FEF3C7", borderLeftColor: "#F59E0B" }}
+          style={{ backgroundColor: "#F7F1DE", borderLeftColor: "#C8A951" }}
         >
           <p className="text-sm text-amber-800 font-medium">
             Disclaimer: Historical performance does not guarantee future results.

@@ -225,7 +225,7 @@ export const REGIME_DEFINITIONS = [
     zone: "MP-1",
     range: "0-24",
     label: "Capitulation",
-    color: "#DC2626",
+    color: "#B3382E",
     description:
       "Extreme risk-off conditions. Panic selling, broad-based declines. ~8% frequency.",
   },
@@ -233,14 +233,14 @@ export const REGIME_DEFINITIONS = [
     zone: "MP-2",
     range: "25-44",
     label: "Defensive",
-    color: "#F97316",
+    color: "#C4791F",
     description: "Risk-off, defensive positioning. Hedging activity elevated. ~23% frequency.",
   },
   {
     zone: "MP-3",
     range: "45-55",
     label: "Neutral",
-    color: "#6B7280",
+    color: "#8B93A1",
     description:
       "Balanced, mixed signals. Neither fear nor greed dominates. ~38% frequency.",
   },
@@ -248,7 +248,7 @@ export const REGIME_DEFINITIONS = [
     zone: "MP-4",
     range: "56-75",
     label: "Risk-On",
-    color: "#22C55E",
+    color: "#6F9A3D",
     description:
       "Risk-on, constructive. Momentum and positioning support upside. ~24% frequency.",
   },
@@ -256,7 +256,7 @@ export const REGIME_DEFINITIONS = [
     zone: "MP-5",
     range: "76-100",
     label: "Euphoria",
-    color: "#10B981",
+    color: "#1F7A4D",
     description:
       "Extreme risk-on, euphoric. Complacency high, bubble risk elevated. ~7% frequency.",
   },
@@ -276,7 +276,7 @@ export const FORWARD_RETURNS = [
   {
     regime: "MP-1 Capitulation",
     range: "0-24",
-    color: "#DC2626",
+    color: "#B3382E",
     m1: -2.1,
     m3: 3.5,
     m6: 8.2,
@@ -286,7 +286,7 @@ export const FORWARD_RETURNS = [
   {
     regime: "MP-2 Defensive",
     range: "25-44",
-    color: "#F97316",
+    color: "#C4791F",
     m1: -0.5,
     m3: 2.1,
     m6: 5.8,
@@ -296,7 +296,7 @@ export const FORWARD_RETURNS = [
   {
     regime: "MP-3 Neutral",
     range: "45-55",
-    color: "#6B7280",
+    color: "#8B93A1",
     m1: 0.8,
     m3: 2.8,
     m6: 6.1,
@@ -306,7 +306,7 @@ export const FORWARD_RETURNS = [
   {
     regime: "MP-4 Risk-On",
     range: "56-75",
-    color: "#22C55E",
+    color: "#6F9A3D",
     m1: 1.2,
     m3: 3.5,
     m6: 7.8,
@@ -316,7 +316,7 @@ export const FORWARD_RETURNS = [
   {
     regime: "MP-5 Euphoria",
     range: "76-100",
-    color: "#10B981",
+    color: "#1F7A4D",
     m1: -0.3,
     m3: 1.2,
     m6: 4.5,
