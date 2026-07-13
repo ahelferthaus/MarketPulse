@@ -23,8 +23,8 @@ where node >nul 2>nul || (
 )
 
 rem Backend — skip if already serving
-powershell -NoProfile -Command "exit (Test-NetConnection 127.0.0.1 -Port %API_PORT% -InformationLevel Quiet -WarningAction SilentlyContinue) ? 1 : 0"
-if errorlevel 1 (
+netstat -ano | findstr /C:":%API_PORT% " | findstr LISTENING >nul
+if not errorlevel 1 (
   echo MarketPulse API already running on :%API_PORT%
 ) else (
   echo Starting MarketPulse API on :%API_PORT% ...
@@ -40,11 +40,13 @@ if not exist "%ROOT%frontend2\dist\index.html" (
   call npx.cmd vite build || ( echo Build failed. & pause & exit /b 1 )
 )
 
-powershell -NoProfile -Command "exit (Test-NetConnection 127.0.0.1 -Port %WEB_PORT% -InformationLevel Quiet -WarningAction SilentlyContinue) ? 1 : 0"
-if errorlevel 1 (
+rem Frontend — bind to 127.0.0.1 explicitly (vite otherwise binds IPv6 ::1
+rem only on Windows, and http://127.0.0.1 refuses to connect)
+netstat -ano | findstr /C:":%WEB_PORT% " | findstr LISTENING >nul
+if not errorlevel 1 (
   echo Frontend already serving on :%WEB_PORT%
 ) else (
-  start "MarketPulse Web" /min cmd /c "cd /d "%ROOT%frontend2" && npx.cmd vite preview --port %WEB_PORT% --strictPort"
+  start "MarketPulse Web" /min cmd /c "cd /d "%ROOT%frontend2" && npx.cmd vite preview --host 127.0.0.1 --port %WEB_PORT% --strictPort"
 )
 
 timeout /t 3 /nobreak >nul
