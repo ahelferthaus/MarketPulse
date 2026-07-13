@@ -42,8 +42,39 @@ OUTPUT_DIR = (
 )
 
 
+def _connect_store() -> None:
+    """Wire the route handlers to the real store/cache.
+
+    The handlers read ``backend.main.store``/``cache`` module globals, which
+    are normally assigned during FastAPI startup. When this job runs
+    standalone we assign them here so the payloads carry the real computed
+    scores (run ``backend.jobs.compute_scores`` first). If anything fails,
+    the handlers keep their graceful demo fallback.
+    """
+    import backend.main as main_module
+
+    try:
+        from backend.storage.duckdb_store import DuckDBStore
+        from backend.storage.cache import Cache
+
+        try:
+            store = DuckDBStore()
+            store.init_database()
+        except Exception:
+            # the API server holds the write lock — read alongside it
+            store = DuckDBStore(read_only=True)
+            store.query("SELECT 1")
+        main_module.store = store
+        main_module.cache = Cache()
+        logger.info("Payload generator connected to store: %s (ro=%s)",
+                    store.db_path, store.read_only)
+    except Exception as exc:  # pragma: no cover — CI without optional deps
+        logger.warning("No store available (%s) — payloads will use fallbacks", exc)
+
+
 async def _build_payloads() -> Dict[str, Any]:
     """Call each endpoint handler and return a {filename: payload} mapping."""
+    _connect_store()
     payloads: Dict[str, Any] = {}
 
     # Per-market payloads.
@@ -51,8 +82,11 @@ async def _build_payloads() -> Dict[str, Any]:
         payloads[f"scores-current-{market}"] = await routes_scores.get_current_score(
             market=market
         )
+        # sp500 ships the full 23-year point-in-time reconstruction (the
+        # homepage barometer history); other markets ship one year to keep
+        # the static bundle and the daily payload-refresh commits small.
         payloads[f"history-scores-{market}"] = await routes_history.get_score_history(
-            market=market, days=90
+            market=market, days=9000 if market == "sp500" else 365
         )
         payloads[
             f"components-current-{market}"

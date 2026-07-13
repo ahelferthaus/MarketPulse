@@ -14,7 +14,7 @@ router = APIRouter(prefix="/api/v1/history", tags=["history"])
 @router.get("/scores")
 async def get_score_history(
     market: str = Query(default="sp500", description="Market ID"),
-    days: int = Query(default=365, ge=1, le=730, description="Number of days of history"),
+    days: int = Query(default=365, ge=1, le=9000, description="Number of days of history"),
 ) -> Dict[str, Any]:
     """Get historical scores.
 
@@ -129,7 +129,7 @@ async def get_regime_history(
 def _regime_to_label(regime: str) -> str:
     """Convert regime code to human-readable label."""
     labels = {
-        "mp1_capitulation": "Capitulation",
+        "mp1_capitulation": "Panic",
         "mp2_defensive": "Defensive",
         "mp3_neutral": "Neutral",
         "mp4_risk_on": "Risk-On",
@@ -235,7 +235,7 @@ def _demo_regime_history(market: str) -> Dict[str, Any]:
         },
         {
             "regime": "mp1_capitulation",
-            "regime_label": "Capitulation",
+            "regime_label": "Panic",
             "start_date": (now - timedelta(days=250)).strftime("%Y-%m-%d"),
             "end_date": (now - timedelta(days=200)).strftime("%Y-%m-%d"),
             "forward_returns": {

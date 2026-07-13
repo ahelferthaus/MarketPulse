@@ -26,7 +26,7 @@ export const BRAND = {
 export interface Zone {
   id: string;
   zone: string;      // "MP-1"
-  label: string;     // "Capitulation"
+  label: string;     // "Panic"
   short: string;     // one-word read
   min: number;
   max: number;       // inclusive upper bound
@@ -37,7 +37,7 @@ export interface Zone {
 
 /** Empirically-derived asymmetric bands — keep in sync with backend SPEC. */
 export const ZONES: Zone[] = [
-  { id: "mp1_capitulation", zone: "MP-1", label: "Capitulation", short: "Extreme risk-off",
+  { id: "mp1_capitulation", zone: "MP-1", label: "Panic", short: "Extreme risk-off",
     min: 0,  max: 24,  onNavy: "#C24A3E", onPaper: "#B3382E", text: "#A33328" },
   { id: "mp2_defensive",    zone: "MP-2", label: "Defensive",    short: "Risk-off",
     min: 24, max: 44,  onNavy: "#C4791F", onPaper: "#C4791F", text: "#8F5A14" },
@@ -75,9 +75,9 @@ export function headline(regimeId: string, direction: string): string {
   const d = direction === "rising" ? "rising" : direction === "falling" ? "falling" : "stable";
   const map: Record<string, Record<string, string>> = {
     mp1_capitulation: {
-      rising: "Capitulation, with a pulse returning.",
-      stable: "Capitulation. Fear is in charge.",
-      falling: "Capitulation, and still deteriorating.",
+      rising: "Panic, with a pulse returning.",
+      stable: "Panic. The exits are crowded.",
+      falling: "Panic, and still deteriorating.",
     },
     mp2_defensive: {
       rising: "Defensive, but thawing.",

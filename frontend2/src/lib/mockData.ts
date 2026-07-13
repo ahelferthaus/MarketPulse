@@ -224,7 +224,7 @@ export const REGIME_DEFINITIONS = [
   {
     zone: "MP-1",
     range: "0-24",
-    label: "Capitulation",
+    label: "Panic",
     color: "#B3382E",
     description:
       "Extreme risk-off conditions. Panic selling, broad-based declines. ~8% frequency.",
@@ -242,7 +242,7 @@ export const REGIME_DEFINITIONS = [
     label: "Neutral",
     color: "#8B93A1",
     description:
-      "Balanced, mixed signals. Neither fear nor greed dominates. ~38% frequency.",
+      "Balanced, mixed signals. Neither risk-off nor risk-on dominates. ~38% frequency.",
   },
   {
     zone: "MP-4",
@@ -274,7 +274,7 @@ export const MARKET_CONFIGS = [
 // Updated with empirically-derived asymmetric score ranges
 export const FORWARD_RETURNS = [
   {
-    regime: "MP-1 Capitulation",
+    regime: "MP-1 Panic",
     range: "0-24",
     color: "#B3382E",
     m1: -2.1,
@@ -426,8 +426,8 @@ export const REGIME_TRANSITIONS = [
   { from: "MP-2 Defensive", to: "MP-3 Neutral", count: 15 },
   { from: "MP-3 Neutral", to: "MP-2 Defensive", count: 10 },
   { from: "MP-5 Euphoria", to: "MP-4 Risk-On", count: 5 },
-  { from: "MP-1 Capitulation", to: "MP-2 Defensive", count: 8 },
-  { from: "MP-2 Defensive", to: "MP-1 Capitulation", count: 4 },
+  { from: "MP-1 Panic", to: "MP-2 Defensive", count: 8 },
+  { from: "MP-2 Defensive", to: "MP-1 Panic", count: 4 },
 ];
 
 // ===== EMBED WIDGET =====

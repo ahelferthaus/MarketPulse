@@ -1,9 +1,9 @@
 {
   "market_id": "sp500",
-  "timestamp": "2026-07-10T22:32:06.013783+00:00",
+  "timestamp": "2026-07-13T02:40:08.980991+00:00",
   "regimes": [
     {
-      "regime_label": "Capitulation",
+      "regime_label": "Panic",
       "score_range": "0-20",
       "periods_analyzed": 12,
       "avg_days_in_regime": 45,

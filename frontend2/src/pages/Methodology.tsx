@@ -49,7 +49,7 @@ const indexCards = [
     icon: <Activity size={24} className="text-amber-500" />,
     title: "Composite Score",
     description:
-      "Weighted average of the three sub-indices. The final MarketPulse score that maps to one of five market regimes, from Capitulation (MP-1) to Euphoria (MP-5).",
+      "Weighted average of the three sub-indices. The final MarketPulse score that maps to one of five market regimes, from Panic (MP-1) to Euphoria (MP-5).",
     weight: "100%",
   },
 ];

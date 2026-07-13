@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/v1/backtest", tags=["backtest"])
 # Demo backtest data — forward returns by regime
 REGIME_BACKTEST_DATA = {
     "mp1_capitulation": {
-        "regime_label": "Capitulation",
+        "regime_label": "Panic",
         "score_range": "0-20",
         "periods_analyzed": 12,
         "avg_days_in_regime": 45,
@@ -190,7 +190,7 @@ async def get_regime_backtest(
 def _regime_to_label(regime: str) -> str:
     """Convert regime code to human-readable label."""
     labels = {
-        "mp1_capitulation": "Capitulation",
+        "mp1_capitulation": "Panic",
         "mp2_defensive": "Defensive",
         "mp3_neutral": "Neutral",
         "mp4_risk_on": "Risk-On",

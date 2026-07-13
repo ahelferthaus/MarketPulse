@@ -82,6 +82,7 @@ class Cache:
         key: str,
         value: Any,
         ttl_minutes: Optional[int] = None,
+        ttl: Optional[int] = None,
     ) -> None:
         """Store a value in the cache with an optional TTL.
 
@@ -89,7 +90,13 @@ class Cache:
             key: Cache key string.
             value: Any JSON-serializable value.
             ttl_minutes: Time-to-live in minutes. Uses default if None.
+            ttl: Time-to-live in SECONDS — the API routes call
+                ``cache.set(key, value, ttl=300)`` (matching the in-memory
+                fallback cache); accepting it here keeps the two caches
+                interchangeable. Takes precedence over ttl_minutes.
         """
+        if ttl is not None:
+            ttl_minutes = max(1, round(ttl / 60))
         ttl = ttl_minutes or self.default_ttl_minutes
         expires_at = datetime.now(timezone.utc) + timedelta(minutes=ttl)
         serialized = json.dumps(value, default=str)

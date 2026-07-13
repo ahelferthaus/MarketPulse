@@ -4,9 +4,10 @@ name: Refresh data and deploy
 # rebuilds and deploys the site. This is the ONLY place data is "pulled" —
 # visitors just read the cached static files, so no work happens per page load.
 #
-# Today this refreshes the backend's demo data (and the "last updated"
-# timestamps). Once the backend is wired to real providers / a hosted store,
-# the same workflow will pull live market data with no changes here.
+# compute_scores rebuilds the full point-in-time score history (2003 -> today,
+# all four markets) from free public sources (yfinance + FRED) in the runner,
+# so the deployed payloads are real data. The Bloomberg MCP overlay is
+# local-only and silently skipped here (no Terminal in CI).
 
 on:
   schedule:
@@ -35,7 +36,10 @@ jobs:
           python-version: "3.12"
 
       - name: Install payload-generator dependencies
-        run: pip install fastapi
+        run: pip install fastapi pydantic pydantic-settings duckdb pandas numpy yfinance httpx
+
+      - name: Compute real scores (2003 -> today, all markets)
+        run: python -m backend.jobs.compute_scores --full
 
       - name: Regenerate static payloads
         run: python -m backend.jobs.generate_frontend_payloads

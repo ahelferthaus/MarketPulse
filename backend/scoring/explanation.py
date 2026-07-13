@@ -42,8 +42,8 @@ class ExplanationEngine:
     REGIME_LANGUAGE: Dict[str, Dict[str, str]] = {
         "mp1_capitulation": {
             "label": "in extreme risk-off",
-            "tone": "fear",
-            "descriptor": "Extreme fear is driving markets.",
+            "tone": "risk-off",
+            "descriptor": "Extreme risk-off is driving markets.",
         },
         "mp2_defensive": {
             "label": "defensive",
@@ -106,7 +106,7 @@ class ExplanationEngine:
         },
         "panic": {
             "bullish": "",  # Not bullish
-            "bearish": "panic-level fear in media",
+            "bearish": "panic-level risk-off in media",
             "neutral": "",
         },
         "caution": {
@@ -343,8 +343,8 @@ class ExplanationEngine:
 
         # Regime-specific cues
         if regime_value == "mp1_capitulation":
-            cues.append("Watch for signs of selling exhaustion or a volume capitulation.")
-            cues.append("Extreme fear can persist — look for breadth thrusts to signal a turn.")
+            cues.append("Watch for signs of selling exhaustion or a volume panic.")
+            cues.append("Extreme risk-off can persist — look for breadth thrusts to signal a turn.")
         elif regime_value == "mp2_defensive":
             cues.append("Monitor credit spreads and VIX for signs of stabilization.")
             cues.append("A break above 50 would signal a shift to neutral territory.")

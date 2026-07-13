@@ -248,7 +248,7 @@ export default function Backtest() {
                 <span className="font-medium">Small sample sizes</span>
               </AccordionTrigger>
               <AccordionContent className="text-sm text-slate-600 leading-relaxed">
-                MP-1 (Capitulation) and MP-5 (Euphoria) have limited historical
+                MP-1 (Panic) and MP-5 (Euphoria) have limited historical
                 occurrences. Statistical significance is lower for these extreme
                 regimes. Results should be interpreted with greater caution.
               </AccordionContent>

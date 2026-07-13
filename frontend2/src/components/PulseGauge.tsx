@@ -165,10 +165,10 @@ export default function PulseGauge({
           stroke="rgba(200,169,81,0.35)" strokeWidth="1"
         />
         <text x={CX - 258} y={CY + 38} className="font-data" fontSize="10" fill="rgba(255,255,255,0.4)">
-          0 — FEAR
+          0 — RISK-OFF
         </text>
         <text x={CX + 258} y={CY + 38} textAnchor="end" className="font-data" fontSize="10" fill="rgba(255,255,255,0.4)">
-          GREED — 100
+          RISK-ON — 100
         </text>
       </svg>
     </div>

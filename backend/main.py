@@ -116,7 +116,10 @@ async def lifespan(app: FastAPI):
     try:
         from backend.storage.duckdb_store import DuckDBStore
 
-        store = DuckDBStore(getattr(app.state, "duckdb_path", ".data/marketpulse.duckdb"))
+        # None -> DuckDBStore falls back to settings.duckdb_path, keeping the
+        # API and the batch jobs (compute_scores etc.) on the SAME database.
+        # (A hardcoded ".data/..." here once split them into two silos.)
+        store = DuckDBStore(getattr(app.state, "duckdb_path", None))
         store.init_database()
         logger.info("DuckDB store initialized")
     except ImportError:
@@ -132,7 +135,9 @@ async def lifespan(app: FastAPI):
     try:
         from backend.storage.cache import Cache
 
-        cache = Cache(getattr(app.state, "cache_path", ".data/cache.json"))
+        # None -> Cache falls back to settings.cache_path (same silo rule
+        # as the store above).
+        cache = Cache(getattr(app.state, "cache_path", None))
         logger.info("Cache initialized")
     except ImportError:
         logger.warning("Cache not available, using fallback cache")

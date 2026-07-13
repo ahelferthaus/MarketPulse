@@ -1,57 +1,38 @@
-"""Bloomberg MCP (Model Context Protocol) provider — **stub**.
+"""Bloomberg provider via the Westwood Bloomberg MCP server.
 
-This module defines the full :class:`BaseProvider` interface for a
-future Bloomberg Terminal integration via the Model Context Protocol
-(MCP).  All methods currently return ``None`` with an informative log
-message.
+Talks to the firm's local Bloomberg MCP HTTP service (FastAPI, default
+``http://localhost:8100``; Swagger at ``/docs``), which fronts a live
+Bloomberg Terminal session:
 
-Planned capabilities
---------------------
-Once connected to a Bloomberg Terminal via MCP, this provider will
-expose:
+* ``GET  /status``      -> ``{"connected": true, "terminal_available": true}``
+* ``POST /historical``  -> ``{tickers, fields, start_date, end_date, periodicity}``
+                           -> ``{"data": {ticker: [{"date": ..., FIELD: val}, ...]}}``
+* ``POST /reference``   -> ``{tickers, fields}`` -> ``{"data": {ticker: {FIELD: val}}}``
 
-* **Real-time pricing** — BDP (Bloomberg Data Point) overrides for
-  equities, indices, futures, and options.
-* **Historical data** — BDH (Bloomberg Data History) time-series
-  retrieval with custom fields.
-* **Credit spreads** — ``YAS_CID_SPREAD``, ``YAS_ASW_SPREAD`` for
-  corporate bonds.
-* **Fund flows** — EPFR-tracked ETF and mutual fund flow data.
-* **News sentiment** — Bloomberg NLP-scored news archive.
-* **Options analytics** — VOL_SURFACE, DELTA_SKEW, and implied-vol
-  term structure.
+Tickers use full Bloomberg form (``"SPX Index"``, ``"TLT US Equity"``).
 
-Connection instructions
------------------------
-1. Install the Bloomberg MCP server::
+Cost discipline: this provider is the *professional* tier for small live
+pulls (a handful of tickers, PX_LAST, a few sessions). Deep history stays
+on the free public tier (yfinance / FRED) by design — see
+``backend/jobs/compute_scores.py``.
 
-       pip install bloomberg-mcp
+Implemented: price history, current quote, source status.
+Not served by the MCP service (returns None, chain falls through):
+breadth, options, credit spreads, safe-haven basket, news, social, flows.
 
-2. Set environment variables::
-
-       export BLOOMBERG_MCP_HOST=localhost
-       export BLOOMBERG_MCP_PORT=50051
-       export BLOOMBERG_AUTH_TOKEN=<your-token>
-
-3. Launch the MCP server (requires active Bloomberg Terminal session)::
-
-       bloomberg-mcp-server --config mcp_config.yaml
-
-4. Update this provider to connect via gRPC instead of returning stubs.
-
-Security notes
---------------
-* Never commit ``BLOOMBERG_AUTH_TOKEN`` to version control.
-* Use a secrets manager (AWS Secrets Manager, Vault, etc.) in production.
-* All Bloomberg data is subject to terminal license agreements.
+Configuration: ``BLOOMBERG_MCP_URL`` env var (default ``http://localhost:8100``).
+No credentials are stored — the MCP server uses the logged-in Terminal's
+own entitlements.
 """
 
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
+import os
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
+import httpx
 import pandas as pd
 
 from backend.domain.article import Article, SocialPost
@@ -60,145 +41,159 @@ from backend.providers.base import BaseProvider
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_URL = "http://localhost:8100"
+
+# yfinance-style symbols -> Bloomberg form, so the provider is a drop-in
+# member of the chain when callers use public-tier symbols.
+SYMBOL_MAP: Dict[str, str] = {
+    "^GSPC": "SPX Index",
+    "^SPX": "SPX Index",
+    "^NDX": "NDX Index",
+    "^RUT": "RTY Index",
+    "^DJI": "INDU Index",
+    "^VIX": "VIX Index",
+    "SPY": "SPY US Equity",
+    "TLT": "TLT US Equity",
+    "GLD": "GLD US Equity",
+    "UUP": "UUP US Equity",
+}
+
+
+def to_bbg(ticker: str) -> str:
+    """Map a public-tier symbol to Bloomberg form (pass through if already)."""
+    if ticker in SYMBOL_MAP:
+        return SYMBOL_MAP[ticker]
+    if ticker.endswith(("Index", "Equity", "Curncy", "Comdty", "Govt")):
+        return ticker
+    return f"{ticker} US Equity"
+
 
 class BloombergMCPProvider(BaseProvider):
-    """Bloomberg Terminal provider via Model Context Protocol (MCP).
-
-    **Status:** Stub — not yet connected to a live Bloomberg Terminal.
-
-    All methods log a diagnostic message and return ``None`` (or an
-    empty collection) so the :class:`ProviderChain` seamlessly falls
-    back to the next provider in the priority list.
-    """
+    """Live Bloomberg data through the local Westwood MCP HTTP server."""
 
     name: str = "bloomberg_mcp"
     tier: str = "professional"
 
-    def __init__(self) -> None:
-        logger.info(
-            "BloombergMCPProvider initialised — Bloomberg MCP not connected (stub mode)"
-        )
+    def __init__(self, base_url: Optional[str] = None, timeout: float = 30.0) -> None:
+        self.base_url = (base_url or os.environ.get("BLOOMBERG_MCP_URL", DEFAULT_URL)).rstrip("/")
+        self.timeout = timeout
+        logger.info("BloombergMCPProvider -> %s", self.base_url)
 
-    # ── internal helper ───────────────────────────────────────────────
+    # ── HTTP helpers ─────────────────────────────────────────────────
 
-    def _log_stub(self, method: str) -> None:
-        logger.debug("Bloomberg MCP not connected — %s returning stub (None)", method)
+    async def _get(self, path: str) -> Optional[dict]:
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                r = await client.get(f"{self.base_url}{path}")
+                r.raise_for_status()
+                return r.json()
+        except Exception as exc:
+            logger.debug("Bloomberg MCP GET %s failed: %s", path, exc)
+            return None
 
-    # ── BaseProvider implementation (all stubs) ───────────────────────
+    async def _post(self, path: str, payload: dict) -> Optional[dict]:
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                r = await client.post(f"{self.base_url}{path}", json=payload)
+                r.raise_for_status()
+                return r.json()
+        except Exception as exc:
+            logger.debug("Bloomberg MCP POST %s failed: %s", path, exc)
+            return None
+
+    # ── Market data ──────────────────────────────────────────────────
+
+    async def get_price_history_range(
+        self,
+        ticker: str,
+        start_yyyymmdd: str,
+        end_yyyymmdd: str,
+        field: str = "PX_LAST",
+    ) -> Optional[pd.DataFrame]:
+        """Daily *field* history between two dates (Bloomberg BDH-style)."""
+        bbg = to_bbg(ticker)
+        body = {
+            "tickers": [bbg],
+            "fields": [field],
+            "start_date": start_yyyymmdd,
+            "end_date": end_yyyymmdd,
+            "periodicity": "DAILY",
+        }
+        res = await self._post("/historical", body)
+        rows = (res or {}).get("data", {}).get(bbg, [])
+        if not rows:
+            return None
+        df = pd.DataFrame(rows)
+        if "date" not in df.columns or field not in df.columns:
+            return None
+        df["date"] = pd.to_datetime(df["date"])
+        df = df.set_index("date").sort_index()
+        close = pd.to_numeric(df[field], errors="coerce").dropna()
+        out = pd.DataFrame({
+            "open": close, "high": close, "low": close,
+            "close": close, "volume": 0,
+        })
+        return out if not out.empty else None
 
     async def get_price_history(
         self,
         ticker: str,
         days: int = 252,
     ) -> Optional[pd.DataFrame]:
-        """Would fetch BDH (Bloomberg Data History) time-series.
+        end = datetime.now()
+        start = end - timedelta(days=int(days * 1.6) + 5)
+        return await self.get_price_history_range(
+            ticker, start.strftime("%Y%m%d"), end.strftime("%Y%m%d"))
 
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_price_history")
+    async def get_current_quote(self, ticker: str) -> Optional[Dict[str, Any]]:
+        bbg = to_bbg(ticker)
+        res = await self._post("/reference", {
+            "tickers": [bbg],
+            "fields": ["PX_LAST", "CHG_NET_1D", "CHG_PCT_1D"],
+        })
+        data = (res or {}).get("data", {}).get(bbg, {})
+        px = data.get("PX_LAST")
+        if px is None:
+            return None
+        return {
+            "price": float(px),
+            "change": float(data.get("CHG_NET_1D") or 0.0),
+            "change_percent": float(data.get("CHG_PCT_1D") or 0.0),
+            "volume": 0,
+            "timestamp": datetime.now(timezone.utc),
+        }
+
+    # ── Not served by the MCP service — chain falls through ─────────
+
+    async def get_breadth_data(self, market_id: str) -> Optional[Dict[str, Any]]:
         return None
 
-    async def get_current_quote(
-        self,
-        ticker: str,
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch BDP (Bloomberg Data Point) real-time fields.
-
-        Fields: ``PX_LAST``, ``PX_CHG_NET_1D``, ``PX_VOLUME``.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_current_quote")
+    async def get_options_data(self, ticker: str) -> Optional[Dict[str, Any]]:
         return None
 
-    async def get_breadth_data(
-        self,
-        market_id: str,
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch advance/decline statistics from Bloomberg.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_breadth_data")
+    async def get_credit_spreads(self) -> Optional[Dict[str, Any]]:
         return None
 
-    async def get_options_data(
-        self,
-        ticker: str,
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch options analytics: put/call volume, open interest.
-
-        Bloomberg fields: ``OPT_PUT_CALL_VOLUME_RATIO``, ``OPT_PX``.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_options_data")
+    async def get_safe_haven_assets(self) -> Optional[Dict[str, Any]]:
         return None
 
-    async def get_credit_spreads(
-        self,
-        series_id: str = "BAMLH0A0HYM2",
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch OAS spreads from Bloomberg's fixed-income analytics.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_credit_spreads")
-        return None
-
-    async def get_safe_haven_assets(
-        self,
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch TLT, GLD, DXY via Bloomberg real-time feeds.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_safe_haven_assets")
-        return None
-
-    async def get_news_articles(
-        self,
-        query: str = "stock market",
-        limit: int = 20,
-    ) -> List[Article]:
-        """Would search Bloomberg News with NLP sentiment scoring.
-
-        Stub: returns empty list.
-        """
-        self._log_stub("get_news_articles")
+    async def get_news_articles(self, limit: int = 50) -> List[Article]:
         return []
 
-    async def get_social_posts(
-        self,
-        query: str = "stock market",
-        limit: int = 50,
-    ) -> List[SocialPost]:
-        """Bloomberg does not provide social-media data directly.
-
-        Stub: returns empty list.
-        """
-        self._log_stub("get_social_posts")
+    async def get_social_posts(self, limit: int = 50) -> List[SocialPost]:
         return []
 
-    async def get_flows_data(
-        self,
-        ticker: str = "SPY",
-    ) -> Optional[Dict[str, Any]]:
-        """Would fetch EPFR-tracked fund flows via Bloomberg.
-
-        Stub: returns ``None``.
-        """
-        self._log_stub("get_flows_data")
+    async def get_flows_data(self, market_id: str) -> Optional[Dict[str, Any]]:
         return None
+
+    # ── Health ───────────────────────────────────────────────────────
 
     async def get_source_status(self) -> SourceStatus:
-        """Report as unavailable — Bloomberg MCP is not connected."""
+        res = await self._get("/status")
+        ok = bool(res and res.get("connected") and res.get("terminal_available"))
         return SourceStatus(
             provider=self.name,
-            available=False,
-            last_successful_fetch=None,
-            error_count_24h=0,
-            avg_response_ms=None,
-            data_freshness_minutes=None,
+            available=ok,
+            last_successful_fetch=datetime.now(timezone.utc) if ok else None,
             tier=self.tier,
         )

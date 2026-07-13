@@ -62,7 +62,7 @@ async function load(
 // ── Regime helpers (empirically-derived asymmetric bands, see SPEC) ─────────
 
 const BANDS = [
-  { max: 24, label: "Capitulation", regime: "mp1_capitulation", zone: "MP-1" },
+  { max: 24, label: "Panic", regime: "mp1_capitulation", zone: "MP-1" },
   { max: 44, label: "Defensive", regime: "mp2_defensive", zone: "MP-2" },
   { max: 55, label: "Neutral", regime: "mp3_neutral", zone: "MP-3" },
   { max: 75, label: "Risk-On", regime: "mp4_risk_on", zone: "MP-4" },
@@ -191,7 +191,9 @@ export async function getDashboard(market = "sp500"): Promise<Dashboard> {
   try {
     const [scores, histRaw] = await Promise.all([
       load("scores/current", { market }, `scores-current-${market}`),
-      load("history/scores", { market, days: "90" }, `history-scores-${market}`),
+      // Full available history — the store holds a point-in-time
+      // reconstruction back to 2003; the chart slices per range.
+      load("history/scores", { market, days: "9000" }, `history-scores-${market}`),
     ]);
 
     const history = mapHistory(histRaw);

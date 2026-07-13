@@ -20,7 +20,15 @@ import { ZONES, SERIES, SERIES_LABELS, BRAND, zoneFor } from "../lib/theme";
 
 type SeriesKey = keyof typeof SERIES;
 const SERIES_KEYS = Object.keys(SERIES) as SeriesKey[];
-const RANGES = [30, 60, 90] as const;
+// 0 = everything available (23 years when the full history is loaded)
+const RANGES = [
+  { days: 30, label: "1M" },
+  { days: 90, label: "3M" },
+  { days: 365, label: "1Y" },
+  { days: 1825, label: "5Y" },
+  { days: 0, label: "Max" },
+] as const;
+const MAX_POINTS = 900; // downsample beyond this so long ranges stay crisp
 
 interface TooltipRow {
   value: number;
@@ -66,14 +74,26 @@ interface StackedPulseChartProps {
 }
 
 export default function StackedPulseChart({ data = MOCK_HISTORY }: StackedPulseChartProps) {
-  const [range, setRange] = useState<(typeof RANGES)[number]>(90);
+  const [range, setRange] = useState<number>(90);
   const [visible, setVisible] = useState<Record<SeriesKey, boolean>>({
     classic: false,
     narrative: false,
     positioning: false,
   });
 
-  const sliced = useMemo(() => data.slice(-range), [data, range]);
+  const sliced = useMemo(() => {
+    // trading days ≈ calendar days × 5/7
+    const rows = range === 0 ? data : data.slice(-Math.round(range * 5 / 7));
+    if (rows.length <= MAX_POINTS) return rows;
+    const step = Math.ceil(rows.length / MAX_POINTS);
+    const sampled = rows.filter((_, i) => i % step === 0);
+    if (sampled[sampled.length - 1] !== rows[rows.length - 1]) {
+      sampled.push(rows[rows.length - 1]);
+    }
+    return sampled;
+  }, [data, range]);
+
+  const longRange = range === 0 || range > 365;
 
   const toggle = (k: SeriesKey) =>
     setVisible((v) => ({ ...v, [k]: !v[k] }));
@@ -93,16 +113,16 @@ export default function StackedPulseChart({ data = MOCK_HISTORY }: StackedPulseC
           <div className="flex items-center gap-1" role="group" aria-label="History range">
             {RANGES.map((r) => (
               <button
-                key={r}
-                onClick={() => setRange(r)}
+                key={r.label}
+                onClick={() => setRange(r.days)}
                 className="px-2.5 py-1 rounded-md font-data text-[11px] transition-colors"
                 style={
-                  range === r
+                  range === r.days
                     ? { backgroundColor: BRAND.navy900, color: "#fff" }
                     : { color: BRAND.slate }
                 }
               >
-                {r}D
+                {r.label}
               </button>
             ))}
           </div>
@@ -184,7 +204,9 @@ export default function StackedPulseChart({ data = MOCK_HISTORY }: StackedPulseC
           </div>
         ))}
         <span className="ml-auto text-[11px]" style={{ color: BRAND.slateFaint }}>
-          Band edges mark the real zone boundaries (24 / 44 / 55 / 75)
+          {longRange
+            ? "History is reconstructed point-in-time from momentum, volatility, credit and safe-haven data; narrative accrues live."
+            : "Band edges mark the real zone boundaries (24 / 44 / 55 / 75)"}
         </span>
       </div>
     </div>

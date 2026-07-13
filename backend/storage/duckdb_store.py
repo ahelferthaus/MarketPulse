@@ -123,18 +123,23 @@ class DuckDBStore:
         db_path: Path to the DuckDB database file. Defaults to settings.duckdb_path.
     """
 
-    def __init__(self, db_path: Optional[str] = None) -> None:
+    def __init__(self, db_path: Optional[str] = None, read_only: bool = False) -> None:
         self.db_path: str = db_path or settings.duckdb_path
+        self.read_only: bool = read_only
         self._conn: Optional[duckdb.DuckDBPyConnection] = None
 
     # ── Connection management ─────────────────────────────────────────────
 
     def _connect(self) -> duckdb.DuckDBPyConnection:
-        """Establish a connection to the DuckDB database."""
+        """Establish a connection to the DuckDB database.
+
+        read_only=True lets a second process (e.g. the payload generator)
+        read while the API server holds the write lock.
+        """
         if self._conn is None:
             Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
-            self._conn = duckdb.connect(self.db_path)
-            logger.debug("DuckDB connection opened: %s", self.db_path)
+            self._conn = duckdb.connect(self.db_path, read_only=self.read_only)
+            logger.debug("DuckDB connection opened: %s (ro=%s)", self.db_path, self.read_only)
         return self._conn
 
     def close(self) -> None:

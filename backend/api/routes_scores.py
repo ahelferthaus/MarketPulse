@@ -162,7 +162,7 @@ async def get_composite_score(
 def _regime_to_label(regime: Optional[str]) -> str:
     """Convert regime code to human-readable label."""
     labels = {
-        "mp1_capitulation": "Capitulation",
+        "mp1_capitulation": "Panic",
         "mp2_defensive": "Defensive",
         "mp3_neutral": "Neutral",
         "mp4_risk_on": "Risk-On",
